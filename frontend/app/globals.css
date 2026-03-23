@@ -64,6 +64,27 @@ nav ul li a.active {
 
 .input-group label {
   font-size: .8em;
-  font-weight: bold;
   font-family: var(--font-roboto), sans-serif;
 }
+
+.input-group input, 
+.input-group select {
+  padding: 0.5em;
+  border: 1px solid #b4b4b4;
+  border-radius: .2em;
+}
+
+button {
+  background-color: #1F4E8C;
+  color: white;
+  font-weight: 900;
+  padding: 0.5em;
+  border: none;
+  cursor: pointer;
+  border-radius: .5em;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #355BFF;
+} 

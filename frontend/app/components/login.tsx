@@ -1,7 +1,12 @@
 import Image from "next/image";
 import styles from "../style/login.module.css";
 
-export default function LoginPage() {
+type LoginPageProps = {
+  onForgotPassword: () => void;
+  onRegister: () => void;
+};
+
+export default function LoginPage({ onForgotPassword, onRegister }: LoginPageProps) {
   return (
     <section className={styles.wrapper}>
       <div className={styles.contentContainer}>
@@ -20,12 +25,28 @@ export default function LoginPage() {
               <label htmlFor="password">Password</label>
               <input type="password" id="password" placeholder="Password" required />
             </div>
-            <div className="details">
-              <div className="remember-me">
-                <input type="checkbox" id="remember" />
-                <label htmlFor="remember">Remember me</label>
-              </div>
-              <a href="#">Forgot password?</a>
+            <div className={styles.details}>
+              <a 
+                href="#"
+                className={styles.forgot} 
+                onClick={(event) => {
+                event.preventDefault();
+                onForgotPassword();
+              }}>
+                Forgot password?
+              </a>
+              <span className={styles.register}>
+                Don&apos;t have an account?
+                <a 
+                  href="#"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    onRegister();
+                  }}
+                >
+                  Signup
+                </a>
+              </span>
             </div>
             <button type="submit">Login</button>
           </form>

@@ -25,10 +25,9 @@
 }
 
 .contentHeader h3 {
-  font-size: .8em;
+  font-size: .9em;
   color: rgba(116, 116, 116, 0.59);
 }
-
 
 .form {
   display: flex;
@@ -38,19 +37,31 @@
   margin-top: 2em;
 }
 
-.form input {
-  padding: 0.5em;
-  border: 1px solid #b4b4b4;
-  border-radius: .2em;
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .8em;
 }
 
-.form button {
-  background-color: #1F4E8C;
-  color: white;
-  padding: 0.5em;
-  border: none;
-  cursor: pointer;
-  border-radius: .5em;
+.remember{
+  display: flex;
+  gap: .2em;
+}
+
+.forgot {
+  color: #355BFF;
+  text-decoration: underline;
+}
+
+.register {
+  text-align: center;
+}
+
+.register a {
+  margin-left: .2em;
+  color: #355BFF;
+  text-decoration: underline;
 }
 
 .imageContainer {

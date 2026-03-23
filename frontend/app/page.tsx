@@ -5,8 +5,9 @@ import Image from "next/image";
 import HomePage from "./components/home";
 import RegisterPage from "./components/register";
 import LoginPage from "./components/login";
+import ForgotPage from "./components/forgot-password";
 
-type ActivePage = "home" | "login" | "register";
+type ActivePage = "home" | "login" | "register" | "forgot";
 
 export default function Page() {
   const [activePage, setActivePage] = useState<ActivePage>("home");
@@ -65,7 +66,18 @@ export default function Page() {
         </nav>
       </header>
 
-      {activePage === "home" ? <HomePage /> : activePage === "register" ? <RegisterPage /> : <LoginPage />}
+            {activePage === "home" ? (
+                <HomePage />
+            ) : activePage === "register" ? (
+                <RegisterPage />
+            ) : activePage === "forgot" ? (
+                <ForgotPage />
+            ) : (
+                    <LoginPage
+                        onForgotPassword={() => setActivePage("forgot")}
+                        onRegister={() => setActivePage("register")}
+                    />
+            )}
     </main>
   );
 }
