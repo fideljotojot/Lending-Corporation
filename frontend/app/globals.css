@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #F4F6F9;
   --foreground: #171717;
 }
 
@@ -12,15 +12,58 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-roboto), sans-serif;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1.5em;
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: .98em;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 2em;
+  font-family: var(--font-poppins), sans-serif;
+  color: #171717;
+}
+
+nav ul li a.active {
+  font-weight: bold;
+  color: #C9A227;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: .2em;
+}
+
+.input-group label {
+  font-size: .8em;
+  font-weight: bold;
+  font-family: var(--font-roboto), sans-serif;
 }
