@@ -1,0 +1,91 @@
+/* this is for the overall design for main */
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100vh;
+}
+
+
+/* this is for the image container */
+.imageContainer {
+    flex: 1;
+    background-color: #ECDBCB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* this is for the content container which contains the forms */
+.contentContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* this is for the content header (create and please input details) */
+.contentHeader {
+  gap: .5em;
+  font-weight: bold;
+  font-family: var(--font-inter), sans-serif;
+  width: 35em;
+}
+
+.contentHeader h1 {
+  font-size: 1.8em;
+}
+
+.contentHeader h3 {
+  font-size: .9em;
+  color: rgba(116, 116, 116, 0.59);
+}
+
+/* this is for the main layout of the form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 35em;
+  margin-top: 1em;
+}
+
+/* this is for form headers (Personal Details, Account Details, etc.) */
+.formHeader {
+    font-size: .8em;
+    font-weight: bold;
+}
+/* this is for the content area within each form section which contains the input fields */
+.formContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .5em 1em;
+}
+
+/* this is for the select placeholder designs */
+.selectPlaceholder {
+  color: #9ca3af;
+}
+
+.selectPlaceholder option {
+  color: #171717;
+}
+
+
+/* this is for the date placeholder designs */
+.datePlaceholder {
+  color: #9ca3af;
+}
+
+.datePlaceholder::-webkit-datetime-edit {
+  color: #9ca3af;
+}
+
+.dateValue {
+  color: #171717;
+}
+
+.dateValue::-webkit-datetime-edit {
+  color: #171717;
+}
