@@ -90,8 +90,7 @@ nav ul li a.active {
 }
 
 .input-group input[type="file"]::file-selector-button {
-  margin-right: 0.6em;
-  padding: 0.35em 0.75em;
+  padding-right: 0.7em !important;
   border-right: 1px solid #9ca3af;
   color: #111827;
   font: inherit;

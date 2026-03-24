@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "../style/login.module.css";
+import { useState } from "react";
 
 type LoginPageProps = {
   onForgotPassword: () => void;
@@ -7,6 +8,13 @@ type LoginPageProps = {
 };
 
 export default function LoginPage({ onForgotPassword, onRegister }: LoginPageProps) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
+
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.contentContainer}>
@@ -15,15 +23,28 @@ export default function LoginPage({ onForgotPassword, onRegister }: LoginPagePro
             <h1>Welcome back</h1>
             <h3>Please enter your details</h3>
           </div>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={handleSubmit}>
             <div className="input-group">
               <label htmlFor="username">Username</label>
-              <input type="text" id="username" required />
+              <input 
+                type="text" 
+                id="username" 
+                required 
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
             </div>
 
             <div className="input-group">
               <label htmlFor="password">Password</label>
-              <input type="password" id="password" placeholder="Password" required />
+              <input 
+                type="password" 
+                id="password" 
+                placeholder="Password" 
+                required 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
             <div className={styles.details}>
               <a 

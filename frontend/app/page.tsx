@@ -27,8 +27,8 @@ export default function Page() {
                         href="#"
                         aria-current={activePage === "home" ? "page" : undefined}
                         onClick={(event) => {
-                        event.preventDefault();
-                        setActivePage("home");
+                            event.preventDefault();
+                            setActivePage("home");
                         }}
                     >
                         Home
@@ -41,8 +41,8 @@ export default function Page() {
                         href="#"
                         aria-current={activePage === "register" ? "page" : undefined}
                         onClick={(event) => {
-                        event.preventDefault();
-                        setActivePage("register");
+                            event.preventDefault();
+                            setActivePage("register");
                         }}
                     >
                         Register
@@ -55,8 +55,8 @@ export default function Page() {
                         href="#"
                         aria-current={activePage === "login" ? "page" : undefined}
                         onClick={(event) => {
-                        event.preventDefault();
-                        setActivePage("login");
+                            event.preventDefault();
+                            setActivePage("login");
                         }}
                     >
                         Login
@@ -66,18 +66,18 @@ export default function Page() {
         </nav>
       </header>
 
-            {activePage === "home" ? (
-                <HomePage />
-            ) : activePage === "register" ? (
-                <RegisterPage />
-            ) : activePage === "forgot" ? (
-                <ForgotPage />
-            ) : (
-                    <LoginPage
-                        onForgotPassword={() => setActivePage("forgot")}
-                        onRegister={() => setActivePage("register")}
-                    />
-            )}
+        {activePage === "home" ? (
+            <HomePage />
+        ) : activePage === "register" ? (
+            <RegisterPage />
+        ) : activePage === "forgot" ? (
+            <ForgotPage />
+        ) : (
+                <LoginPage
+                    onForgotPassword={() => setActivePage("forgot")}
+                    onRegister={() => setActivePage("register")}
+                />
+        )}
     </main>
   );
 }

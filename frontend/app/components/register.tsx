@@ -23,6 +23,13 @@ export default function RegisterPage() {
   const [id, setId] = useState("");
   const [income, setIncome] = useState("");
   const [billing, setBilling] = useState("");
+  /* Question and Answer Fields */
+  const [question1, setQuestion1] = useState("");
+  const [answer1, setAnswer1] = useState("");
+  const [question2, setQuestion2] = useState("");
+  const [answer2, setAnswer2] = useState("");
+  const [question3, setQuestion3] = useState("");
+  const [answer3, setAnswer3] = useState("");
 
   const [pageNumber, setPageNumber] = useState<RegisterPageNumber>(1);
 
@@ -47,7 +54,36 @@ export default function RegisterPage() {
       id,
       income,
       billing,
+      question1,
+      answer1,
+      question2,
+      answer2,
+      question3,
+      answer3,
     });
+  };
+
+  const questions = [
+    "What is your mother's maiden name?",
+    "What was the name of your first pet?",
+    "What is the name of your favorite book?",
+    "What city were you born in?",
+    "What is your favorite food?",
+    "What was the make and model of your first car?",
+  ];
+
+  const buildQuestionOptions = (otherSelectedQuestions: string[]) => {
+    const options = [];
+    for (let i = 0; i < questions.length; i++) {
+      const question = questions[i];
+      const isSelectedInOtherField = otherSelectedQuestions.includes(question);
+      options.push(
+        <option key={question} value={question} disabled={isSelectedInOtherField}>
+          {question}
+        </option>
+      );
+    }
+    return options;
   };
 
   return (
@@ -173,6 +209,7 @@ export default function RegisterPage() {
                 </div>
               </div>
 
+              {/* Compliance Documents */}
               <div className="formContainer">
                 <div className={style.formHeader}>
                   <h2>Compliance Documents</h2>
@@ -192,12 +229,72 @@ export default function RegisterPage() {
                   </div>
                 </div>
               </div>
+
+              {/* Security Questions */}
+              <div className="formContainer">
+                <div className={style.formHeader}>
+                  <h2>Security Questions</h2>
+                </div>
+                <div className={style.formContent}>
+                  <div className="input-group">
+                    <label htmlFor="Question1">Question 1</label>
+                    <select
+                      name="Question1"
+                      id="Question1"
+                      value={question1} 
+                      onChange={(event) => setQuestion1(event.target.value)} 
+                      className={question1 === "" ? style.selectPlaceholder : ""}
+                    >
+                      <option value="" disabled>Select a security question</option>
+                      {buildQuestionOptions([question2, question3])}
+                    </select>
+                  </div>
+                  <div className="input-group">
+                    <label htmlFor="Answer1">Answer 1</label>
+                    <input type="text" id="Answer1" value={answer1} onChange={(event) => setAnswer1(event.target.value)} />
+                  </div>
+                  <div className="input-group">
+                    <label htmlFor="Question2">Question 2</label>
+                    <select
+                      name="Question2"
+                      id="Question2"
+                      value={question2}
+                      onChange={(event) => setQuestion2(event.target.value)}
+                      className={question2 === "" ? style.selectPlaceholder : ""}
+                    >
+                      <option value="" disabled>Select a security question</option>
+                      {buildQuestionOptions([question1, question3])}
+                    </select>
+                  </div>
+                  <div className="input-group">
+                    <label htmlFor="Answer2">Answer 2</label>
+                    <input type="text" id="Answer2" value={answer2} onChange={(event) => setAnswer2(event.target.value)} />
+                  </div>
+                  <div className="input-group">
+                    <label htmlFor="Question3">Question 3</label>
+                    <select
+                      name="Question3"
+                      id="Question3"
+                      value={question3}
+                      onChange={(event) => setQuestion3(event.target.value)}
+                      className={question3 === "" ? style.selectPlaceholder : ""}
+                    >
+                      <option value="" disabled>Select a security question</option>
+                      {buildQuestionOptions([question1, question2])}
+                    </select>
+                  </div>
+                  <div className="input-group">
+                    <label htmlFor="Answer3">Answer 3</label>
+                    <input type="text" id="Answer3" value={answer3} onChange={(event) => setAnswer3(event.target.value)} />
+                  </div>
+                </div>
+              </div>
               <div style={{ display: "flex", gap: "1em", justifyContent: "center", marginTop: "1em" }}>
                 <button type="button" style={{ width: "40%" }} onClick={() => setPageNumber(1)}>
                   Back
                 </button>
                 <button type="submit" style={{ width: "40%" }}>
-                  Proceed
+                  Register
                 </button>
               </div>
             </Fragment>
