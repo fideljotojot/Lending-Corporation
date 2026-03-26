@@ -15,10 +15,90 @@
 }
 
 .top-left-container {
+    flex: 3;
     display: flex;
     flex-direction: column;
     gap: 1em;
     color: white;
     max-width: 500px;
-    padding: 2em;
+    padding-left: 10em;
+}
+
+.top-left-container h1 {
+    font: 900 3.5em var(--font-lato), sans-serif;
+    margin: 0;
+    width: 11em;
+}
+
+.apply-button {
+    background-color: #C9A227;
+    width: 50%;
+    color: #000;
+    font-size: .9em;
+    margin-top: 1em;
+    padding: .8em;
+}
+
+.top-right-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 10em;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+    padding: 5em 0 3em 8em;
+}
+
+.heading {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+}
+
+.heading-text {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+}
+
+.heading h1 {
+    font: bolder 2.5em var(--font-lato), sans-serif;
+}
+
+.heading h1 span {
+    color: #CE7C3D;
+    font-size: 1.2em;
+}
+
+.heading p span{
+    color: #C9A227;
+    font-weight: 500;
+}
+
+.heading-image {
+    width: 50%;
+}
+
+.loans {
+    font: 500 1.2em var(--font-lato), sans-serif;
+}
+
+.loans h4 span{
+    color: #1F4E8C;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.loans p {
+    margin-top: 1em;
+}
+
+.loans p span {
+    font: bold .9em var(--font-lato), sans-serif;
 }

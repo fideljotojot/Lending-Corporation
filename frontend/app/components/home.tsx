@@ -20,9 +20,26 @@ export default function HomePage() {
         </div>
       </div>
 
-        <div className={styles["details"]}>
-          <p>Learn more about our services and how we can help you achieve your financial goals.</p>
+      <div className={styles["details"]}>
+        <div className={styles["heading"]}>
+          <div className={styles["heading-text"]}>
+            <h1>Wanna have the future you want but <span>MONEY</span> is the issue?</h1>
+            <p>We are here to help you achieve those <span>DREAMS</span>.</p>
+          </div>
+          <Image
+            src="/images/future_screen.png"
+            alt="Future Image"
+            className={styles["heading-image"]}
+            width={600}
+            height={600}
+          />
         </div>
+        <div className={styles["loans"]}>
+          <h3>Wanna have your dream car?</h3>
+          <h4>We can help you with our <span>CAR LOAN</span>.</h4>
+          <p>with as low as <span>X% interest</span>, you can now drive the car you really need.</p>
+        </div>
+      </div>
     </main>
   )
 }
