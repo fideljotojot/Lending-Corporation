@@ -14,59 +14,59 @@ export default function Page() {
 
   return (
     <main>
-      <header>
-        <div className="logo">
-          <Image src="/images/logo.png" alt="Lending Corporation Logo" width={50} height={50} />
-          <h1>Lending Corporation</h1>
-        </div>
-        <nav>
-            <ul>
-                <li>
-                    <a
-                        className={activePage === "home" ? "active" : ""}
-                        href="#"
-                        aria-current={activePage === "home" ? "page" : undefined}
-                        onClick={(event) => {
-                            event.preventDefault();
-                            setActivePage("home");
-                        }}
-                    >
-                        Home
-                    </a>
-                </li>
+        <header className={activePage === "home" ? "home-links" : ""}>
+            <div className="logo">
+                <Image src="/images/logo.png" alt="Lending Corporation Logo" width={50} height={50} />
+                <h1>Lending Corporation</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li>
+                        <a
+                            className={activePage === "home" ? "active" : ""}
+                            href="#"
+                            aria-current={activePage === "home" ? "page" : undefined}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setActivePage("home");
+                            }}
+                        >
+                            Home
+                        </a>
+                    </li>
 
-                <li>
-                    <a 
-                        className={activePage === "register" ? "active" : ""}
-                        href="#"
-                        aria-current={activePage === "register" ? "page" : undefined}
-                        onClick={(event) => {
-                            event.preventDefault();
-                            setActivePage("register");
-                        }}
-                    >
-                        Register
-                    </a>
-                </li>
+                    <li>
+                        <a 
+                            className={activePage === "register" ? "active" : ""}
+                            href="#"
+                            aria-current={activePage === "register" ? "page" : undefined}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setActivePage("register");
+                            }}
+                        >
+                            Register
+                        </a>
+                    </li>
 
-                <li>
-                    <a
-                        className={activePage === "login" ? "active" : ""}
-                        href="#"
-                        aria-current={activePage === "login" ? "page" : undefined}
-                        onClick={(event) => {
-                            event.preventDefault();
-                            setActivePage("login");
-                        }}
-                    >
-                        Login
-                    </a>
-                </li>
-            </ul>
-        </nav>
-      </header>
+                    <li>
+                        <a
+                            className={activePage === "login" ? "active" : ""}
+                            href="#"
+                            aria-current={activePage === "login" ? "page" : undefined}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setActivePage("login");
+                            }}
+                        >
+                            Login
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
 
-        {activePage === "home" ? (
+        { activePage === "home" ? (
             <HomePage />
         ) : activePage === "register" ? (
             <RegisterPage />

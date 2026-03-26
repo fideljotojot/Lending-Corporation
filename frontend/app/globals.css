@@ -48,11 +48,28 @@ nav ul {
   list-style: none;
   gap: 2em;
   font-family: var(--font-poppins), sans-serif;
+}
+
+nav ul li a {
   color: #171717;
+  text-decoration: none;
+}
+
+header.home-links .logo h1 {
+  color: #ffffff;
+}
+
+header.home-links nav ul {
+  color: #ffffff;
 }
 
 nav ul li a.active {
   font-weight: 400;
+  color: #C9A227;
+}
+
+header.home-links nav ul li a.active,
+header.home-links nav ul li a[aria-current="page"] {
   color: #C9A227;
 }
 
