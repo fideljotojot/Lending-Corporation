@@ -1,9 +1,13 @@
 import Image from 'next/image';
 import styles from '../style/forgot-pass.module.css';
 import login from '../style/login.module.css';
-
+import { useState } from 'react';
 
 export default function ForgotPage() {
+    const [email, setEmail] = useState("");
+    const [newpassword, setNewPassword] = useState("");
+    const [confirmpassword, setConfirmPassword] = useState("");
+
     return (
         <main className={styles["wrapper"]}>
             <div className={styles["container"]}>
@@ -19,8 +23,10 @@ export default function ForgotPage() {
                             <input 
                                 type="email" 
                                 id="email" 
+                                value={email}
                                 required 
                                 placeholder="Enter your email"
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
 
@@ -29,8 +35,10 @@ export default function ForgotPage() {
                             <input 
                                 type="password"
                                 id="new-password"
+                                value={newpassword}
                                 required
                                 placeholder="Enter your new password"
+                                onChange={(e) => setNewPassword(e.target.value)}
                             />
                         </div>
 
@@ -39,7 +47,9 @@ export default function ForgotPage() {
                             <input 
                                 type="password"
                                 id="confirm-password"
+                                value={confirmpassword}
                                 required
+                                onChange={(e) => setConfirmPassword(e.target.value)}
                                 placeholder="Confirm your new password"
                             />
                         </div>
