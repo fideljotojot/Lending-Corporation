@@ -51,7 +51,7 @@ export default function Page() {
 
                     <li>
                         <a
-                            className={activePage === "login" ? "active" : ""}
+                            className={activePage === "login" || activePage === "forgot" ? "active" : ""}
                             href="#"
                             aria-current={activePage === "login" ? "page" : undefined}
                             onClick={(event) => {
