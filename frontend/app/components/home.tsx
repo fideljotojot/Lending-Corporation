@@ -80,6 +80,45 @@ export default function HomePage() {
           />
         </div>
       </div>
+
+      <footer>
+        <Image 
+          src="/images/logo.png" 
+          alt="Lending Corporation Logo" 
+          width={100} 
+          height={100} 
+        />
+        <p>Home Credit Philippines is regulated by the Bangko Sentral ng Pilipinas with contact number (+632) 8708-7087 and with email address consumeraffairs@bsp.gov.ph, and webchat at <a href="https://www.bsp.gov.ph/" target="_blank" rel="noopener noreferrer">www.bsp.gov.ph</a>.</p>
+        <div className={styles["links-container"]}>
+          <h1>Contact us</h1>
+          <div className={styles["links"]}>
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+              <Image
+                src="/images/facebook.png"
+                alt="Facebook"
+                width={30}
+                height={30}
+              />
+            </a>
+            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+              <Image
+                src="/images/instagram.png"
+                alt="Instagram"
+                width={30}
+                height={30}
+              />
+            </a>
+            <a href="https://www.gmail.com" target="_blank" rel="noopener noreferrer">
+              <Image
+                src="/images/email.png"
+                alt="Email"
+                width={30}
+              height={30}
+              />
+            </a>
+          </div>
+        </div>
+      </footer>
     </main>
   )
 }
