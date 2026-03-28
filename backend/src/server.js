@@ -3,6 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const bcrypt = require("bcrypt");
 
+
 dotenv.config();
 
 const supabase = require("./lib/supabase");
