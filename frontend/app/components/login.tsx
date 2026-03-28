@@ -10,8 +10,28 @@ type LoginPageProps = {
 export default function LoginPage({ onForgotPassword, onRegister }: LoginPageProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:4000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Login failed');
+      }
+
+      alert(`Welcome back, ${data.user.firstName || data.user.username}`);
+    } catch (error: any) {
+      alert(error.message || 'Unable to login at this time');
+    }
   };
 
 

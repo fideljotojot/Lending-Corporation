@@ -8,6 +8,38 @@ export default function ForgotPage() {
     const [newpassword, setNewPassword] = useState("");
     const [confirmpassword, setConfirmPassword] = useState("");
 
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        if (newpassword !== confirmpassword) {
+            alert('Passwords do not match');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:4000/forgot-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    newpassword,
+                    confirmpassword,
+                }),
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || 'Unable to reset password');
+            }
+
+            alert(data.message || 'Password updated successfully');
+        } catch (error: any) {
+            alert(error.message || 'Unable to reset password at this time');
+        }
+    };
+
     return (
         <main className={styles["wrapper"]}>
             <div className={styles["container"]}>
@@ -17,7 +49,7 @@ export default function ForgotPage() {
                         <h3>Please enter your details</h3>
                     </div>
 
-                    <form className={login["form"]}>
+                    <form className={login["form"]} onSubmit={handleSubmit}>
                         <div className="input-group">
                             <label htmlFor="email">Email</label>
                             <input 

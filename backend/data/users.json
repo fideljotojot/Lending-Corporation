@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "firstName": "John",
+    "middleName": "A.",
+    "lastName": "Doe",
+    "suffix": "Jr.",
+    "gender": "male",
+    "birthdate": "1990-01-01",
+    "username": "john_doe",
+    "email": "john.doe@example.com",
+    "purok": "Purok 1",
+    "barangay": "San Isidro",
+    "municipality": "Makati",
+    "province": "Metro Manila",
+    "idDocument": "Driver's License",
+    "income": "45000",
+    "billing": "Electricity Bill",
+    "securityQuestions": [
+      {
+        "question": "What is your mother's maiden name?",
+        "answer": "Smith"
+      },
+      {
+        "question": "What was the name of your first pet?",
+        "answer": "Buddy"
+      },
+      {
+        "question": "What is the name of your favorite book?",
+        "answer": "1984"
+      }
+    ],
+    "createdAt": "2026-03-28T17:13:27.436Z",
+    "passwordHash": "$2a$10$hfPljTqcsF10rfMxdun/4O1bBeSowyk/MZDHHGAixKG6wf0QcC6Uu"
+  }
+]

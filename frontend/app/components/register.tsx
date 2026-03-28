@@ -33,10 +33,15 @@ export default function RegisterPage() {
 
   const [pageNumber, setPageNumber] = useState<RegisterPageNumber>(1);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // TODO: connect to backend register endpoint
-    console.log({
+
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    const payload = {
       firstName,
       middleName,
       lastName,
@@ -60,7 +65,27 @@ export default function RegisterPage() {
       answer2,
       question3,
       answer3,
-    });
+    };
+
+    try {
+      const response = await fetch('http://localhost:4000/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed');
+      }
+
+      alert(data.message || 'Registration successful');
+      setPageNumber(1);
+    } catch (error: any) {
+      alert(error.message || 'Unable to register at this time');
+    }
   };
 
   const questions = [
