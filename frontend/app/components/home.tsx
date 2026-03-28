@@ -1,14 +1,18 @@
 import Image from "next/image";
 import styles from "../style/home.module.css";
 
-export default function HomePage() {
+type HomePageProps = {
+  onApply: () => void;
+};
+
+export default function HomePage({ onApply }: HomePageProps) {
   return (
     <main className={styles.wrapper}>
       <div className={styles.top}>
         <div className={styles["top-left-container"]}>
           <h1>Empowering Your Next Big Move.</h1>
           <p>Smart capital solutions built for your goals.</p>
-          <button className={styles["apply-button"]}>Apply now</button>
+          <button type="button" className={styles["apply-button"]} onClick={onApply}>Apply now</button>
         </div>
         <div className={styles["top-right-container"]}>
           <Image 
@@ -39,7 +43,7 @@ export default function HomePage() {
             <h3>Wanna have your dream car?</h3>
             <h4>We can help you with our <span>CAR LOAN</span>.</h4>
             <p>with as low as <span>X% interest</span>, you can now drive the car you really need.</p>
-            <button className={styles["loans-button"]}>Apply now</button>
+            <button type="button" className={styles["loans-button"]} onClick={onApply}>Apply now</button>
           </div>
           <Image
             src="/images/Car Loan Services.png"
@@ -61,7 +65,7 @@ export default function HomePage() {
             <h3>Wanna expand your business?</h3>
             <h4>We can help you with our <span>BUSINESS LOAN</span>.</h4>
             <p>with as low as <span>X% interest</span>, you can now expand your <br /> business and earn more money than you used to.</p>
-            <button className={styles["loans-button"]}>Apply now</button>
+            <button type="button" className={styles["loans-button"]} onClick={onApply}>Apply now</button>
           </div>
         </div>
         <div className={`${styles["loans"]} ${styles["house-card"]}`}>
@@ -69,7 +73,7 @@ export default function HomePage() {
             <h3>Wanna have a HOME that you can proudly call your own?</h3>
             <h4>We can help you with our <span>HOUSE LOAN</span>.</h4>
             <p>with as low as <span>X% interest</span>, you can now buy your <br /> own home that fits your needs.</p>
-            <button className={styles["loans-button"]}>Apply now</button>
+            <button type="button" className={styles["loans-button"]} onClick={onApply}>Apply now</button>
           </div>
           <Image
             src="/images/house_loan.png"

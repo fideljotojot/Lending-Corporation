@@ -67,7 +67,7 @@ export default function Page() {
         </header>
 
         { activePage === "home" ? (
-            <HomePage />
+            <HomePage onApply={() => setActivePage("register")} />
         ) : activePage === "register" ? (
             <RegisterPage />
         ) : activePage === "forgot" ? (
