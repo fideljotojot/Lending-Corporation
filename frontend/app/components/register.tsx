@@ -3,7 +3,12 @@ import { Fragment, useState } from "react";
 import style from "../style/register.module.css";
 
 type RegisterPageNumber = 1 | 2;
-export default function RegisterPage() {
+
+type RegisterPageProps = {
+  onRegisterSuccess?: () => void;
+};
+
+export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -30,37 +35,70 @@ export default function RegisterPage() {
   const [answer2, setAnswer2] = useState("");
   const [question3, setQuestion3] = useState("");
   const [answer3, setAnswer3] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState("");
 
   const [pageNumber, setPageNumber] = useState<RegisterPageNumber>(1);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // TODO: connect to backend register endpoint
-    console.log({
-      firstName,
-      middleName,
-      lastName,
-      suffix,
-      gender,
-      birthdate,
-      username,
-      email,
-      password,
-      confirmPassword,
-      purok,
-      barangay,
-      municipality,
-      province,
-      id,
-      income,
-      billing,
-      question1,
-      answer1,
-      question2,
-      answer2,
-      question3,
-      answer3,
-    });
+
+    if (password !== confirmPassword) {
+      setSubmitMessage("Passwords do not match.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitMessage("");
+
+    try {
+      const response = await fetch("http://localhost:5000/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          first_name: firstName,
+          middle_name: middleName,
+          last_name: lastName,
+          suffix,
+          gender,
+          birthdate,
+          username,
+          email,
+          password,
+          purok_street: purok,
+          barangay,
+          city_municipality: municipality,
+          province,
+          valid_id_file: id || null,
+          proof_of_income_file: income || null,
+          proof_of_billing_file: billing || null,
+          security_question_1: question1,
+          security_answer_1: answer1,
+          security_question_2: question2,
+          security_answer_2: answer2,
+          security_question_3: question3,
+          security_answer_3: answer3,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        setSubmitMessage(result.error || "Registration failed.");
+        return;
+      }
+
+      alert("Registration successful!");
+      onRegisterSuccess?.();
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+      setSubmitMessage("Could not connect to the backend.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const questions = [
@@ -100,6 +138,7 @@ export default function RegisterPage() {
           className= {style.form}
           onSubmit={handleSubmit}
         >
+          {submitMessage ? <p>{submitMessage}</p> : null}
           {pageNumber === 1 ? (
             <Fragment key="page-1">
               {/* Personal Details Contents */}
@@ -294,7 +333,7 @@ export default function RegisterPage() {
                   Back
                 </button>
                 <button type="submit" style={{ width: "40%" }}>
-                  Register
+                  {isSubmitting ? "Registering..." : "Register"}
                 </button>
               </div>
             </Fragment>
