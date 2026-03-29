@@ -139,6 +139,8 @@ export default function Page() {
             <DashboardPage user={sessionUser} onLogout={handleLogout} />
         ) : activePage === "home" ? (
             <HomePage />
+        { activePage === "home" ? (
+            <HomePage onApply={() => setActivePage("register")} />
         ) : activePage === "register" ? (
             <RegisterPage onRegisterSuccess={() => setActivePage("login")} />
         ) : activePage === "forgot" ? (
