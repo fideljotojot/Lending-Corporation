@@ -5,13 +5,50 @@ import { useState } from "react";
 type LoginPageProps = {
   onForgotPassword: () => void;
   onRegister: () => void;
+  onLoginSuccess: (user: {
+    id: string;
+    first_name?: string;
+    username: string;
+    email?: string;
+  }) => void;
 };
 
-export default function LoginPage({ onForgotPassword, onRegister }: LoginPageProps) {
+export default function LoginPage({ onForgotPassword, onRegister, onLoginSuccess }: LoginPageProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        alert(result.error || "Login failed.");
+        return;
+      }
+
+      onLoginSuccess(result.user);
+    } catch (error) {
+      console.error(error);
+      alert("Could not connect to the backend.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
 
@@ -69,7 +106,7 @@ export default function LoginPage({ onForgotPassword, onRegister }: LoginPagePro
                 </a>
               </span>
             </div>
-            <button type="submit">Login</button>
+            <button type="submit">{isSubmitting ? "Logging in..." : "Login"}</button>
           </form>
         </div>
       </div>
