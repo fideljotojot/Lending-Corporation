@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import HomePage from "./components/home";
 import RegisterPage from "./components/register";
@@ -16,26 +16,31 @@ type SessionUser = {
   email?: string;
 };
 
-export default function Page() {
-  const [activePage, setActivePage] = useState<ActivePage>("home");
-  const [sessionUser, setSessionUser] = useState<SessionUser | null>(null);
+function getStoredSessionUser(): SessionUser | null {
+    if (typeof window === "undefined") {
+        return null;
+    }
 
-  useEffect(() => {
     const savedUser = window.localStorage.getItem("sessionUser");
 
     if (!savedUser) {
-      return;
+        return null;
     }
 
     try {
-      const parsedUser = JSON.parse(savedUser) as SessionUser;
-      setSessionUser(parsedUser);
-      setActivePage("dashboard");
+        return JSON.parse(savedUser) as SessionUser;
     } catch (error) {
-      console.error(error);
-      window.localStorage.removeItem("sessionUser");
+        console.error(error);
+        window.localStorage.removeItem("sessionUser");
+        return null;
     }
-  }, []);
+}
+
+export default function Page() {
+    const [sessionUser, setSessionUser] = useState<SessionUser | null>(() => getStoredSessionUser());
+    const [activePage, setActivePage] = useState<ActivePage>(() =>
+        getStoredSessionUser() ? "dashboard" : "home"
+    );
 
   const handleLoginSuccess = (user: SessionUser) => {
     setSessionUser(user);
@@ -138,8 +143,6 @@ export default function Page() {
         { activePage === "dashboard" && sessionUser ? (
             <DashboardPage user={sessionUser} onLogout={handleLogout} />
         ) : activePage === "home" ? (
-            <HomePage />
-        { activePage === "home" ? (
             <HomePage onApply={() => setActivePage("register")} />
         ) : activePage === "register" ? (
             <RegisterPage onRegisterSuccess={() => setActivePage("login")} />
