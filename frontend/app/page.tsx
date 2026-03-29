@@ -1,14 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import HomePage from "./components/home";
 import RegisterPage from "./components/register";
 import LoginPage from "./components/login";
 import ForgotPage from "./components/forgot-password";
 import DashboardPage from "./components/pages/dashboard";
+import ProfilePage from "./components/pages/profile";
 
-type ActivePage = "home" | "login" | "register" | "forgot" | "dashboard";
+type ActivePage = "home" | "login" | "register" | "forgot" | "dashboard" | "loans" | "payments" | "notifications" | "profile" | "settings";
 type SessionUser = {
   id: string;
   first_name?: string;
@@ -16,31 +17,35 @@ type SessionUser = {
   email?: string;
 };
 
-function getStoredSessionUser(): SessionUser | null {
-    if (typeof window === "undefined") {
-        return null;
-    }
-
-    const savedUser = window.localStorage.getItem("sessionUser");
-
-    if (!savedUser) {
-        return null;
-    }
-
-    try {
-        return JSON.parse(savedUser) as SessionUser;
-    } catch (error) {
-        console.error(error);
-        window.localStorage.removeItem("sessionUser");
-        return null;
-    }
+function PagePlaceholder({ title }: { title: string }) {
+    return (
+        <section style={{ maxWidth: "900px", margin: "0 auto", padding: "3rem 1.5rem" }}>
+            <h1 style={{ fontSize: "2rem", marginBottom: "0.75rem" }}>{title}</h1>
+            <p style={{ color: "#4b5563" }}>This section is under construction. The content will be added soon.</p>
+        </section>
+    );
 }
 
 export default function Page() {
-    const [sessionUser, setSessionUser] = useState<SessionUser | null>(() => getStoredSessionUser());
-    const [activePage, setActivePage] = useState<ActivePage>(() =>
-        getStoredSessionUser() ? "dashboard" : "home"
-    );
+    const [sessionUser, setSessionUser] = useState<SessionUser | null>(null);
+    const [activePage, setActivePage] = useState<ActivePage>("home");
+
+    useEffect(() => {
+        const savedUser = window.localStorage.getItem("sessionUser");
+
+        if (!savedUser) {
+            return;
+        }
+
+        try {
+            const parsed = JSON.parse(savedUser) as SessionUser;
+            setSessionUser(parsed);
+            setActivePage("dashboard");
+        } catch (error) {
+            console.error("Failed to parse sessionUser", error);
+            window.localStorage.removeItem("sessionUser");
+        }
+    }, []);
 
   const handleLoginSuccess = (user: SessionUser) => {
     setSessionUser(user);
@@ -77,6 +82,71 @@ export default function Page() {
                                     }}
                                 >
                                     Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    className={activePage === "loans" ? "active" : ""}
+                                    href="#"
+                                    aria-current={activePage === "loans" ? "page" : undefined}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        setActivePage("loans");
+                                    }}
+                                >
+                                    Loans
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    className={activePage === "payments" ? "active" : ""}
+                                    href="#"
+                                    aria-current={activePage === "payments" ? "page" : undefined}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        setActivePage("payments");
+                                    }}
+                                >
+                                    Payments
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    className={activePage === "notifications" ? "active" : ""}
+                                    href="#"
+                                    aria-current={activePage === "notifications" ? "page" : undefined}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        setActivePage("notifications");
+                                    }}
+                                >
+                                    Notifications
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    className={activePage === "profile" ? "active" : ""}
+                                    href="#"
+                                    aria-current={activePage === "profile" ? "page" : undefined}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        setActivePage("profile");
+                                    }}
+                                >
+                                    Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    className={activePage === "settings" ? "active" : ""}
+                                    href="#"
+                                    aria-current={activePage === "settings" ? "page" : undefined}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        setActivePage("settings");
+                                    }}
+                                >
+                                    Settings
                                 </a>
                             </li>
                             <li>
@@ -140,8 +210,22 @@ export default function Page() {
             </nav>
         </header>
 
-        { activePage === "dashboard" && sessionUser ? (
-            <DashboardPage user={sessionUser} onLogout={handleLogout} />
+        { sessionUser ? (
+            activePage === "dashboard" ? (
+                <DashboardPage user={sessionUser} onLogout={handleLogout} />
+            ) : activePage === "loans" ? (
+                <PagePlaceholder title="Loans" />
+            ) : activePage === "payments" ? (
+                <PagePlaceholder title="Payments" />
+            ) : activePage === "notifications" ? (
+                <PagePlaceholder title="Notifications" />
+            ) : activePage === "profile" ? (
+                <ProfilePage user={sessionUser} />
+            ) : activePage === "settings" ? (
+                <PagePlaceholder title="Settings" />
+            ) : (
+                <DashboardPage user={sessionUser} onLogout={handleLogout} />
+            )
         ) : activePage === "home" ? (
             <HomePage onApply={() => setActivePage("register")} />
         ) : activePage === "register" ? (
