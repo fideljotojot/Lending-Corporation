@@ -7,8 +7,14 @@ import RegisterPage from "./components/register";
 import LoginPage from "./components/login";
 import ForgotPage from "./components/forgot-password";
 import DashboardPage from "./components/pages/dashboard";
+import LoansPage from "./components/pages/loans";
+import PaymentsPage from "./components/pages/payments";
+import NotificationsPage from "./components/pages/notifications";
+import ProfilePage from "./components/pages/profile";
+import SettingsPage from "./components/pages/settings";
+import PayLoan from "./components/pages/pay-loan";
 
-type ActivePage = "home" | "login" | "register" | "forgot" | "dashboard";
+type ActivePage = "home" | "login" | "register" | "forgot" | "dashboard" | "loans" | "payments" | "notifications" | "profile" | "settings" | "pay-loan";
 type SessionUser = {
   id: string;
   first_name?: string;
@@ -79,6 +85,71 @@ export default function Page() {
                                     Dashboard
                                 </a>
                             </li>
+
+                            <li>
+                                <a href="#"
+                                    className={activePage === "loans" ? "active" : ""}
+                                    aria-current={activePage === "loans" ? "page" : undefined}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        setActivePage("loans");
+                                    }}
+                                >
+                                    Loans
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#"
+                                    className={activePage === "payments" || activePage === "pay-loan" ? "active" : ""}
+                                    aria-current={activePage === "payments" ? "page" : undefined}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        setActivePage("payments");
+                                    }}
+                                >
+                                    Payments
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#"
+                                    className={activePage === "notifications" ? "active" : ""}
+                                    aria-current={activePage === "notifications" ? "page" : undefined}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        setActivePage("notifications");
+                                    }}
+                                >
+                                    Notifications
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#"
+                                    className={activePage === "profile" ? "active" : ""}
+                                    aria-current={activePage === "profile" ? "page" : undefined}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        setActivePage("profile");
+                                    }}
+                                >
+                                    Profile
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#"
+                                    className={activePage === "settings" ? "active" : ""}
+                                    aria-current={activePage === "settings" ? "page" : undefined}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        setActivePage("settings");
+                                    }}
+                                >
+                                    Settings
+                                </a>
+                            </li>
                             <li>
                                 <a
                                     href="#"
@@ -141,7 +212,24 @@ export default function Page() {
         </header>
 
         { activePage === "dashboard" && sessionUser ? (
-            <DashboardPage user={sessionUser} onLogout={handleLogout} />
+            <DashboardPage
+                user={sessionUser}
+                onApplyLoan={() => setActivePage("loans")}
+                onPayLoan={() => setActivePage("pay-loan")}
+                onViewPayments={() => setActivePage("payments")}
+            />
+        ) : activePage === "loans" && sessionUser ? (
+            <LoansPage />
+        ) : activePage === "payments" && sessionUser ? (
+            <PaymentsPage />
+        ) : activePage === "notifications" && sessionUser ? (
+            <NotificationsPage />
+        ) : activePage === "profile" && sessionUser ? (
+            <ProfilePage />
+        ) : activePage === "settings" && sessionUser ? (
+            <SettingsPage />
+        ) : activePage === "pay-loan" && sessionUser ? (
+            <PayLoan />
         ) : activePage === "home" ? (
             <HomePage onApply={() => setActivePage("register")} />
         ) : activePage === "register" ? (

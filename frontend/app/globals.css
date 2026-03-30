@@ -23,6 +23,15 @@ main {
   flex-direction: column;
 }
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  padding: 6em 4em;
+  width: 100%;
+  min-height: 100vh;
+}
+
 header {
   display: flex;
   justify-content: space-between;
