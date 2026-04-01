@@ -17,11 +17,15 @@ export default function LoginPage({ onForgotPassword, onRegister, onLoginSuccess
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const [messageType, setMessageType] = useState<"success" | "error" | null>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     setIsSubmitting(true);
+    setMessage(null);
+    setMessageType(null);
 
     try {
       const response = await fetch("http://localhost:5000/api/login", {
@@ -38,14 +42,20 @@ export default function LoginPage({ onForgotPassword, onRegister, onLoginSuccess
       const result = await response.json();
 
       if (!response.ok) {
-        alert(result.error || "Login failed.");
+        setMessage(result.error || "Login failed.");
+        setMessageType("error");
         return;
       }
 
-      onLoginSuccess(result.user);
+      setMessage("Login successful! Redirecting to dashboard...");
+      setMessageType("success");
+      setTimeout(() => {
+        onLoginSuccess(result.user);
+      }, 900);
     } catch (error) {
       console.error(error);
-      alert("Could not connect to the backend.");
+      setMessage("An unexpected error occurred.");
+      setMessageType("error");
     } finally {
       setIsSubmitting(false);
     }
@@ -59,6 +69,11 @@ export default function LoginPage({ onForgotPassword, onRegister, onLoginSuccess
           <div className={styles.contentHeader}>
             <h1>Welcome back</h1>
             <h3>Please enter your details</h3>
+            {message ? (
+              <div className={`messagebox ${messageType === "success" ? "messagebox-success" : "messagebox-error"}`}>
+                <p>{message}</p>
+              </div>
+            ) : null}
           </div>
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className="input-group">
@@ -66,7 +81,6 @@ export default function LoginPage({ onForgotPassword, onRegister, onLoginSuccess
               <input 
                 type="text" 
                 id="username" 
-                required 
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
@@ -77,8 +91,7 @@ export default function LoginPage({ onForgotPassword, onRegister, onLoginSuccess
               <input 
                 type="password" 
                 id="password" 
-                placeholder="Password" 
-                required 
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

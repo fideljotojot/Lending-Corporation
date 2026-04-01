@@ -120,7 +120,6 @@ export default function Page() {
   const handleLoginSuccess = (user: SessionUser) => {
     setSessionUser(user);
     window.localStorage.setItem("sessionUser", JSON.stringify(user));
-    alert("Login successful!");
     setActivePage("dashboard");
   };
 

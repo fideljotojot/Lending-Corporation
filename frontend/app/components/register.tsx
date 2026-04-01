@@ -37,6 +37,7 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
   const [answer3, setAnswer3] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
 
   const [pageNumber, setPageNumber] = useState<RegisterPageNumber>(1);
 
@@ -45,11 +46,13 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
 
     if (password !== confirmPassword) {
       setSubmitMessage("Passwords do not match.");
+      setSubmitStatus("error");
       return;
     }
 
     setIsSubmitting(true);
     setSubmitMessage("");
+    setSubmitStatus(null);
 
     try {
       const response = await fetch("http://localhost:5000/api/register", {
@@ -87,15 +90,20 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
 
       if (!response.ok) {
         setSubmitMessage(result.error || "Registration failed.");
+        setSubmitStatus("error");
         return;
       }
 
-      alert("Registration successful!");
-      onRegisterSuccess?.();
+      setSubmitMessage("Registration successful! Redirecting to login...");
+      setSubmitStatus("success");
+      setTimeout(() => {
+        onRegisterSuccess?.();
+      }, 900);
       console.log(result);
     } catch (error) {
       console.error(error);
       setSubmitMessage("Could not connect to the backend.");
+      setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
     }
@@ -138,7 +146,11 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
           className= {style.form}
           onSubmit={handleSubmit}
         >
-          {submitMessage ? <p>{submitMessage}</p> : null}
+          {submitMessage ? (
+            <p className={`messagebox ${submitStatus === "success" ? "messagebox-success" : "messagebox-error"}`}>
+              {submitMessage}
+            </p>
+          ) : null}
           {pageNumber === 1 ? (
             <Fragment key="page-1">
               {/* Personal Details Contents */}
