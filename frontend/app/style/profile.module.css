@@ -1,0 +1,171 @@
+.loadingWrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.loadingVideo {
+	width: 320px;
+	height: 320px;
+}
+
+.headerRow {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+	margin-bottom: 1.5rem;
+	flex-wrap: wrap;
+}
+
+.pageTitle {
+	margin: 0;
+	font-size: 2rem;
+	color: #111827;
+	font-weight: 700;
+}
+
+.subtitle {
+	margin: 0;
+	color: #6b7280;
+}
+
+.actionsRow {
+	display: flex;
+	gap: 0.75rem;
+	flex-wrap: wrap;
+}
+
+.buttonBase {
+	border-radius: 1em;
+	padding: 1em 1.5em;
+	cursor: pointer;
+	font-weight: 700;
+	transition: opacity 0.2s ease;
+}
+
+.cancelButton {
+	border: 1px solid #d1d5db;
+	background-color: #ffffff;
+	color: #374151;
+}
+
+.cancelButton:hover {
+	background-color: #37415194;
+	color: #ffffff;
+}
+
+.saveButton {
+	border: none;
+	color: #ffffff;
+}
+
+.saveButton:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+
+.message {
+	margin-bottom: 1rem;
+	padding: 1rem 1.25rem;
+	border-radius: 1rem;
+	background-color: #e0fee0;
+	color: #03a10b;
+}
+
+.mainGrid {
+	display: grid;
+	grid-template-columns: 1fr 1.8fr;
+	gap: 3em;
+}
+
+.leftColumn,
+.rightColumn {
+	height: 48em;
+}
+
+.leftColumn {
+	display: flex;
+	flex-direction: column;
+}
+
+.rightColumn {
+	display: grid;
+	gap: 3em;
+	height: 100%;
+}
+
+.dataCard {
+	padding: 2em;
+	gap: 0;
+}
+
+.cardTitle {
+	margin: 0;;
+	font-size: 1.15rem;
+	font-weight: 700;
+	color: #111827;
+	text-transform: uppercase;
+}
+
+.profileContainer {
+	height: 30em;
+	width: 100%;
+	border-radius: 1em;
+	margin: 1em 0;
+	overflow: hidden;
+}
+
+.profileImage {
+	width: 100%;
+}
+
+.uploadButton {
+	width: 100%;
+	margin-top: 1em;
+	padding: 0.8em;
+	border: none;
+}
+
+.stackFields {
+	margin-top: 1.5rem;
+	display: grid;
+	gap: 1rem;
+}
+
+.formGrid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1rem;
+	margin-top: 1.5rem;
+}
+
+.fieldGroup {
+	display: grid;
+	gap: 0.45rem;
+}
+
+.label {
+	color: #111827;
+	font-size: 0.95em;
+	font-weight: 600;
+}
+
+.input {
+  padding: 0.5em;
+  border: 1px solid #b4b4b4;
+  border-radius: .5em;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #fff;
+  font: inherit;
+  font-size: .9em;
+}
+
+.inputReadOnly {
+	background-color: #e7e9eb;
+}
+
+.inputEditable {
+	background-color: #ffffff;
+}

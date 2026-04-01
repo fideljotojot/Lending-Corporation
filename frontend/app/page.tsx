@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import HomePage from "./components/home";
 import RegisterPage from "./components/register";
@@ -47,6 +47,75 @@ export default function Page() {
     const [activePage, setActivePage] = useState<ActivePage>(() =>
         getStoredSessionUser() ? "dashboard" : "home"
     );
+    const [isScrolled, setIsScrolled] = useState(false);
+    const disableScrolledHeader = activePage === "home";
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 12);
+        };
+
+        handleScroll();
+        window.addEventListener("scroll", handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
+    const renderContent = () => {
+        const isAuthenticated = Boolean(sessionUser);
+
+        if (isAuthenticated && sessionUser) {
+            switch (activePage) {
+                case "dashboard":
+                    return (
+                        <DashboardPage
+                            user={sessionUser}
+                            onApplyLoan={() => setActivePage("loans")}
+                            onPayLoan={() => setActivePage("pay-loan")}
+                            onViewPayments={() => setActivePage("payments")}
+                        />
+                    );
+                case "loans":
+                    return <LoansPage />;
+                case "payments":
+                    return <PaymentsPage />;
+                case "notifications":
+                    return <NotificationsPage />;
+                case "profile":
+                    return <ProfilePage user={sessionUser} />;
+                case "settings":
+                    return <SettingsPage />;
+                case "pay-loan":
+                    return <PayLoan />;
+                default:
+                    return <DashboardPage
+                        user={sessionUser}
+                        onApplyLoan={() => setActivePage("loans")}
+                        onPayLoan={() => setActivePage("pay-loan")}
+                        onViewPayments={() => setActivePage("payments")}
+                    />;
+            }
+        }
+
+        switch (activePage) {
+            case "home":
+                return <HomePage onApply={() => setActivePage("register")} />;
+            case "register":
+                return <RegisterPage onRegisterSuccess={() => setActivePage("login")} />;
+            case "forgot":
+                return <ForgotPage />;
+            default:
+                return (
+                    <LoginPage
+                        onForgotPassword={() => setActivePage("forgot")}
+                        onRegister={() => setActivePage("register")}
+                        onLoginSuccess={handleLoginSuccess}
+                    />
+                );
+        }
+    };
 
   const handleLoginSuccess = (user: SessionUser) => {
     setSessionUser(user);
@@ -63,7 +132,9 @@ export default function Page() {
 
   return (
     <main>
-        <header className={activePage === "home" ? "home-links" : ""}>
+        <header
+            className={`${activePage === "home" ? "home-links" : ""} ${isScrolled && !disableScrolledHeader ? "scrolled" : ""}`.trim()}
+        >
             <div className="logo">
                 <Image src="/images/logo.png" alt="Lending Corporation Logo" width={50} height={50} />
                 <h1>Lending Corporation</h1>
@@ -211,38 +282,7 @@ export default function Page() {
             </nav>
         </header>
 
-        { activePage === "dashboard" && sessionUser ? (
-            <DashboardPage
-                user={sessionUser}
-                onApplyLoan={() => setActivePage("loans")}
-                onPayLoan={() => setActivePage("pay-loan")}
-                onViewPayments={() => setActivePage("payments")}
-            />
-        ) : activePage === "loans" && sessionUser ? (
-            <LoansPage />
-        ) : activePage === "payments" && sessionUser ? (
-            <PaymentsPage />
-        ) : activePage === "notifications" && sessionUser ? (
-            <NotificationsPage />
-        ) : activePage === "profile" && sessionUser ? (
-            <ProfilePage />
-        ) : activePage === "settings" && sessionUser ? (
-            <SettingsPage />
-        ) : activePage === "pay-loan" && sessionUser ? (
-            <PayLoan />
-        ) : activePage === "home" ? (
-            <HomePage onApply={() => setActivePage("register")} />
-        ) : activePage === "register" ? (
-            <RegisterPage onRegisterSuccess={() => setActivePage("login")} />
-        ) : activePage === "forgot" ? (
-            <ForgotPage />
-        ) : (
-                <LoginPage
-                    onForgotPassword={() => setActivePage("forgot")}
-                    onRegister={() => setActivePage("register")}
-                    onLoginSuccess={handleLoginSuccess}
-                />
-        )}
+        {renderContent()}
     </main>
   );
 }

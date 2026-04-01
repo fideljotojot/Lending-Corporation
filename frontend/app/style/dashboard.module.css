@@ -33,7 +33,7 @@
 .quick-actions h2,
 .bottom-card h2 {
     margin: 0;
-    font: 600 1.2em var(--font-lato);
+    font: 600 1.5em var(--font-lato);
     text-transform: uppercase;
     color: #0F2D52;
 }
@@ -119,7 +119,7 @@
 .button-container button {
     flex: 1;
     padding: .8em 0;
-    font-size: 1.25em;
+    font-size: 1.1em;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -3,6 +3,7 @@
 :root {
   --background: #F4F6F9;
   --foreground: #171717;
+  --header-height: 88px;
 }
 
 @theme inline {
@@ -26,8 +27,7 @@ main {
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: 2em;
-  padding: 6em 4em;
+  padding: 6em 4em 3em;
   width: 100%;
   min-height: 100vh;
 }
@@ -38,10 +38,39 @@ header {
   width: 100%;
   padding: 1.5em;
   background-color: transparent;
-  position: absolute;
+  position: sticky;
   top: 0;
-  left: 0;
+  z-index: 1000;
+
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5em;
+
+  background: transparent; /* keeps “overlay” look */
+  margin-bottom: calc(var(--header-height) * -1); /* mimics absolute overlap */
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, backdrop-filter 0.25s ease;
 }
+
+header.scrolled {
+  background-color: rgb(244, 246, 249);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 6px 16px rgba(23, 23, 23, 0.08);
+}
+
+header.scrolled .logo h1,
+header.scrolled nav ul li a {
+  color: #171717;
+}
+
+header.scrolled nav ul li a.active,
+header.scrolled nav ul li a[aria-current="page"] {
+  color: #C9A227;
+}
+
+
 
 .logo {
   display: flex;
@@ -148,5 +177,34 @@ button {
 }
 
 button:hover {
-  background-color: #355BFF;
-} 
+  background-color: #192e8d;
+}
+
+.data-card {
+    position: relative;
+    overflow: hidden;
+    background: rgba(174, 174, 174, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(50px) saturate(160%);
+    border-radius: 2em;
+    padding: 1.5em;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1em;
+    box-shadow:
+        inset 0 -10px 16px -4px rgba(255, 255, 255, 0.95),
+        0 5px 5px rgba(15, 23, 42, 0.308);
+}
+
+.data-card::before {
+    content: "";
+    position: absolute;
+    inset: -40% auto auto -30%;
+    width: 220px;
+    height: auto;
+    border-radius: 50%;
+    pointer-events: none;
+}

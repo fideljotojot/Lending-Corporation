@@ -149,6 +149,88 @@ app.post("/api/login", async (req, res) => {
   });
 });
 
+app.get("/api/profile/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const { data, error } = await supabase
+    .from("users")
+    .select(
+      "id, first_name, middle_name, last_name, suffix, gender, birthdate, username, email, purok_street, barangay, city_municipality, province"
+    )
+    .eq("id", id)
+    .limit(1);
+
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+
+  if (!data || data.length === 0) {
+    return res.status(404).json({ error: "User profile not found." });
+  }
+
+  res.json({ user: data[0] });
+});
+
+app.put("/api/profile/:id", async (req, res) => {
+  const { id } = req.params;
+  const {
+    first_name,
+    middle_name,
+    last_name,
+    suffix,
+    gender,
+    birthdate,
+    username,
+    email,
+    purok_street,
+    barangay,
+    city_municipality,
+    province,
+  } = req.body;
+
+  if (!first_name || !middle_name || !last_name || !gender || !birthdate || !username || !email) {
+    return res.status(400).json({ error: "Please complete the required profile details." });
+  }
+
+  const { data, error } = await supabase
+    .from("users")
+    .update({
+      first_name,
+      middle_name,
+      last_name,
+      suffix: suffix || null,
+      gender,
+      birthdate,
+      username,
+      email,
+      purok_street: purok_street || null,
+      barangay: barangay || null,
+      city_municipality: city_municipality || null,
+      province: province || null,
+    })
+    .eq("id", id)
+    .select(
+      "id, first_name, middle_name, last_name, suffix, gender, birthdate, username, email, purok_street, barangay, city_municipality, province"
+    );
+
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+
+  if (!data || data.length === 0) {
+    return res.status(404).json({ error: "User profile not found." });
+  }
+
+  res.json({
+    message: "Profile updated successfully.",
+    user: data[0],
+  });
+});
+
+app.use("/api", (req, res) => {
+  res.status(404).json({ error: "API route not found." });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
