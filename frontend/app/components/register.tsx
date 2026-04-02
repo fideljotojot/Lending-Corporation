@@ -40,6 +40,81 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
   const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
 
   const [pageNumber, setPageNumber] = useState<RegisterPageNumber>(1);
+  const [showPage1Errors, setShowPage1Errors] = useState(false);
+
+  /* For first name error warnings */
+  const firstNameInvalid = () => {
+    const value = firstName.trim();
+    if (value == '') {
+      return "First name is required.";
+    }
+    if (!/^[A-Z][a-zA-Z]*$/.test(value)) {
+      return "First letter of each word not capitalized."
+    }
+    if (value.length <= 1) {
+      return "First name is too short."
+    }
+    if (value.length > 20) {
+      return "First name is too long."
+    }
+    if (!/^[A-Za-z][A-Za-z\s'-]*$/.test(value)) {
+      return "First name has invalid characters."
+    }
+    if (/(.)\1{2,}/.test(value)) {
+      return "First name has three or more consecutive identical letters."
+    }
+    if (/[A-Z].*[A-Z]/.test(value)) {
+      return "First name has two or more uppercased letters in a word."
+    }
+    return "";
+  }
+
+  const middleNameInvalid = () => {
+    const value = middleName.trim();
+    if (value.length == 1) {
+      return "Middle name is too short."
+    }
+    if (value.length > 20) {
+      return "Middle name is too long."
+    }
+    if (value.length != 0 && !/^[A-Z][a-zA-Z]*$/.test(value)) {
+      return "First letter of each word should be capitalized."
+    }
+    if (/(.)\1{2,}/.test(value)) {
+      return "First name has three or more consecutive identical letters."
+    }
+    if (/[A-Z].*[A-Z]/.test(value)) {
+      return "First name has two or more uppercased letters in a word."
+    }
+    return "";
+  }
+
+
+  /* For page 1 validation */
+  const isPage1Valid = () => {
+    return (
+      firstNameInvalid() == "" &&
+      middleNameInvalid() &&
+      lastName.trim() !== "" &&
+      gender !== "" &&
+      birthdate !== "" &&
+      username.trim() !== "" &&
+      email.trim() !== "" &&
+      password.trim() !== "" &&
+      confirmPassword.trim() !== ""
+    );
+  };
+
+  /* for next button  to redirect to page 2 */
+  const handleNextPage = () => {
+    setShowPage1Errors(true);
+
+    if (!isPage1Valid()) {
+      return;
+    }
+
+    setPageNumber(2);
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -132,6 +207,7 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
     return options;
   };
 
+
   return (
     <main className={style.wrapper}>
       <div className={style.imageContainer}>
@@ -141,16 +217,16 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
         <div className={style.contentHeader}>
           <h1>Create account</h1>
           <h3>Please enter your details</h3>
-        </div>
-        <form 
-          className= {style.form}
-          onSubmit={handleSubmit}
-        >
           {submitMessage ? (
             <p className={`messagebox ${submitStatus === "success" ? "messagebox-success" : "messagebox-error"}`}>
               {submitMessage}
             </p>
           ) : null}
+        </div>
+        <form 
+          className= {style.form}
+          onSubmit={handleSubmit}
+        >
           {pageNumber === 1 ? (
             <Fragment key="page-1">
               {/* Personal Details Contents */}
@@ -162,15 +238,24 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                   <div className="input-group">
                     <label htmlFor="fname">First Name</label>
                     <input type="text" id="fname" value={firstName} onChange={(event) => setFirstName(event.target.value)} />
-                    </div>
+                    <p className="errorMessage">
+                      {showPage1Errors ? firstNameInvalid() : null}
+                    </p>
+                  </div>
                   <div className="input-group">
                     <label htmlFor="mname">Middle Name</label>
                     <input type="text" id="mname" value={middleName} onChange={(event) => setMiddleName(event.target.value)} />
-                    </div>
-                    <div className="input-group">
-                      <label htmlFor="lname">Last Name</label>
-                      <input type="text" id="lname" value={lastName} onChange={(event) => setLastName(event.target.value)} />
-                    </div>
+                    <p className="errorMessage">
+                      {showPage1Errors ? middleNameInvalid() : null}
+                    </p>
+                  </div>
+                  <div className="input-group">
+                    <label htmlFor="lname">Last Name</label>
+                    <input type="text" id="lname" value={lastName} onChange={(event) => setLastName(event.target.value)} />
+                    <p className="errorMessage">
+                      {showPage1Errors && lastName.trim() === "" ? "Last name is required." : null}
+                    </p>
+                  </div>
                   <div className="input-group">
                     <label htmlFor="suffix">Suffix</label>
                     <input type="text" id="suffix" value={suffix} onChange={(event) => setSuffix(event.target.value)} />
@@ -188,6 +273,9 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                       <option value="male">Male</option>
                       <option value="female">Female</option>
                     </select>
+                    <p className="errorMessage">
+                      {showPage1Errors && gender === "" ? "Gender is required." : null}
+                    </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="birthdate">Birthdate</label>
@@ -198,6 +286,9 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                       onChange={(event) => setBirthdate(event.target.value)}
                       className={birthdate === "" ? style.datePlaceholder : style.dateValue}
                     />
+                    <p className="errorMessage">
+                      {showPage1Errors && birthdate === "" ? "Birthdate is required." : null}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -210,25 +301,37 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                   <div className="input-group">
                     <label htmlFor="username">Username</label>
                     <input type="text" id="username" value={username} onChange={(event) => setUsername(event.target.value)} />
+                    <p className="errorMessage">
+                      {showPage1Errors && username.trim() === "" ? "Username is required." : null}
+                    </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="email">Email</label>
                     <input type="email" id="email" value={email} onChange={(event) => setEmail(event.target.value)} />
+                    <p className="errorMessage">
+                      {showPage1Errors && email.trim() === "" ? "Email is required." : null}
+                    </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="password">Password</label>
                     <input type="password" id="password" value={password} onChange={(event) => setPassword(event.target.value)} />
+                    <p className="errorMessage">
+                      {showPage1Errors && password.trim() === "" ? "Password is required." : null}
+                    </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="confirmPassword">Confirm Password</label>
                     <input type="password" id="confirmPassword" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} />
+                    <p className="errorMessage">
+                      {showPage1Errors && confirmPassword.trim() === "" ? "Please confirm your password." : null}
+                    </p>
                   </div>
                 </div>
               </div>
               <button
                 type="button"
                 style={{ width: "40%", alignSelf: "center", marginTop: "1em" }}
-                onClick={() => setPageNumber(2)}
+                onClick={handleNextPage}
               >
                 Next
               </button>

@@ -91,7 +91,6 @@ export default function LoginPage({ onForgotPassword, onRegister, onLoginSuccess
               <input 
                 type="password" 
                 id="password" 
-                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

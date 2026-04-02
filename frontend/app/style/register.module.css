@@ -28,18 +28,19 @@
 /* this is for the content header (create and please input details) */
 .contentHeader {
   gap: .5em;
-  font-weight: bold;
   font-family: var(--font-inter), sans-serif;
   width: 35em;
 }
 
 .contentHeader h1 {
   font-size: 1.8em;
+  font-weight: bold;
 }
 
 .contentHeader h3 {
   font-size: .9em;
   color: rgba(116, 116, 116, 0.59);
+  font-weight: bold;
 }
 
 /* this is for the main layout of the form */
