@@ -42,62 +42,141 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
   const [pageNumber, setPageNumber] = useState<RegisterPageNumber>(1);
   const [showPage1Errors, setShowPage1Errors] = useState(false);
 
-  /* For first name error warnings */
-  const firstNameInvalid = () => {
+  const suffixOptions = ["Jr.", "Sr.", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+
+  /* regex for validation */
+  const capitalCheck = (value: string) => 
+    value.length != 0 && !/^[A-Z][a-z]*(?:[\s'-][A-Z][a-z]*)*$/.test(value);
+  const multipleUppercase = (value: string) => 
+    /(?:^|[\s'-])[A-Z][a-z]*[A-Z][A-Za-z]*/.test(value);
+  const hasConsecutiveLetters = (value: string) => 
+    /([A-Za-z])\1{2,}/i.test(value);
+  const invalidInput = (value: string) => 
+    !/^[A-Za-z][A-Za-z\s'-]*$/.test(value)
+  const tooLong = (value: string) => value.length > 20
+  const tooShort = (value: string) => value.length <= 1
+
+  /* Error messages */
+  const capitalizationErrorMessage = "First letter of each word not capitalized."
+  const multipleUppercaseErrorMessage = "has multiple uppercased letters in a word."
+  const consecutiveLettersErrorMessage = "has three or more consecutive identical letters."
+
+  /* For first name validation */
+  const firstNameValidation = () => {
     const value = firstName.trim();
-    if (value == '') {
+    if (value == "") {
       return "First name is required.";
     }
-    if (!/^[A-Z][a-zA-Z]*$/.test(value)) {
-      return "First letter of each word not capitalized."
-    }
-    if (value.length <= 1) {
+    if (tooShort(value)) {
       return "First name is too short."
     }
-    if (value.length > 20) {
+    if (tooLong(value)) {
       return "First name is too long."
     }
-    if (!/^[A-Za-z][A-Za-z\s'-]*$/.test(value)) {
+    if (invalidInput(value)) {
       return "First name has invalid characters."
     }
-    if (/(.)\1{2,}/.test(value)) {
-      return "First name has three or more consecutive identical letters."
+    if (multipleUppercase(value)) {
+      return "First name " + multipleUppercaseErrorMessage
     }
-    if (/[A-Z].*[A-Z]/.test(value)) {
-      return "First name has two or more uppercased letters in a word."
+    if (hasConsecutiveLetters(value)) {
+      return "First name " + consecutiveLettersErrorMessage
+    }
+    if (capitalCheck(value)) {
+      return capitalizationErrorMessage
     }
     return "";
   }
 
-  const middleNameInvalid = () => {
+  /* Middle name validation */
+  const middleNameValidation = () => {
     const value = middleName.trim();
+    if (value == "") {
+      return "";
+    }
     if (value.length == 1) {
       return "Middle name is too short."
     }
-    if (value.length > 20) {
+    if (tooLong(value)) {
       return "Middle name is too long."
     }
-    if (value.length != 0 && !/^[A-Z][a-zA-Z]*$/.test(value)) {
-      return "First letter of each word should be capitalized."
+    if (invalidInput(value)) {
+      return "Middle name has invalid characters."
     }
-    if (/(.)\1{2,}/.test(value)) {
-      return "First name has three or more consecutive identical letters."
+    if (multipleUppercase(value)) {
+      return "Middle name " + multipleUppercaseErrorMessage
     }
-    if (/[A-Z].*[A-Z]/.test(value)) {
-      return "First name has two or more uppercased letters in a word."
+    if (hasConsecutiveLetters(value)) {
+      return "Middle name " + consecutiveLettersErrorMessage
+    }
+    if (capitalCheck(value)) {
+      return capitalizationErrorMessage
     }
     return "";
   }
 
+  /* Last name validation */
+  const lastNameValidation = () => {
+    const value = lastName.trim()
+    if (value == "") {
+      return "Last name is required."
+    }
+    if (tooShort(value)) {
+      return "Last name is too short."
+    }
+    if (tooLong(value)) {
+      return "Last name is too long."
+    }
+    if (invalidInput(value)) {
+      return "Last name has invalid characters."
+    }
+    if (multipleUppercase(value)) {
+      return "Last name " + multipleUppercaseErrorMessage
+    }
+    if (hasConsecutiveLetters(value)) {
+      return "Last name " + consecutiveLettersErrorMessage
+    }
+    if (capitalCheck(value)) {
+      return capitalizationErrorMessage
+    }
+    return "";
+  }
+
+  const genderValidation = () => {
+    if (gender.trim() === "") {
+      return "Gender is required."
+    }
+  }
+
+  const birthdayValidation = () => {
+    if (birthdate.trim() === "") {
+      return "Birthdate is required.";
+    }
+    
+    const today = new Date();
+    const birthDate = new Date(birthdate);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    
+    if (age < 18) {
+      return "You must be at least 18 years old.";
+    }
+    
+    return "";
+  }
 
   /* For page 1 validation */
   const isPage1Valid = () => {
     return (
-      firstNameInvalid() == "" &&
-      middleNameInvalid() &&
-      lastName.trim() !== "" &&
+      firstNameValidation() === "" &&
+      middleNameValidation() === "" &&
+      lastNameValidation() === "" &&
       gender !== "" &&
-      birthdate !== "" &&
+      birthdayValidation() == "" &&
       username.trim() !== "" &&
       email.trim() !== "" &&
       password.trim() !== "" &&
@@ -239,26 +318,38 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                     <label htmlFor="fname">First Name</label>
                     <input type="text" id="fname" value={firstName} onChange={(event) => setFirstName(event.target.value)} />
                     <p className="errorMessage">
-                      {showPage1Errors ? firstNameInvalid() : null}
+                      {showPage1Errors ? firstNameValidation() : null}
                     </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="mname">Middle Name</label>
                     <input type="text" id="mname" value={middleName} onChange={(event) => setMiddleName(event.target.value)} />
                     <p className="errorMessage">
-                      {showPage1Errors ? middleNameInvalid() : null}
+                      {showPage1Errors ? middleNameValidation() : null}
                     </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="lname">Last Name</label>
                     <input type="text" id="lname" value={lastName} onChange={(event) => setLastName(event.target.value)} />
                     <p className="errorMessage">
-                      {showPage1Errors && lastName.trim() === "" ? "Last name is required." : null}
+                      {showPage1Errors ? lastNameValidation() : null}
                     </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="suffix">Suffix</label>
-                    <input type="text" id="suffix" value={suffix} onChange={(event) => setSuffix(event.target.value)} />
+                    <select
+                      id="suffix"
+                      value={suffix}
+                      onChange={(event) => setSuffix(event.target.value)}
+                      className={suffix === "" ? style.selectPlaceholder : ""}
+                    >
+                      <option value="">N/A</option>
+                      {suffixOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div className="input-group">
                     <label htmlFor="gender">Gender</label>
@@ -274,7 +365,7 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                       <option value="female">Female</option>
                     </select>
                     <p className="errorMessage">
-                      {showPage1Errors && gender === "" ? "Gender is required." : null}
+                      {showPage1Errors ? genderValidation() : null}
                     </p>
                   </div>
                   <div className="input-group">
@@ -287,7 +378,7 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                       className={birthdate === "" ? style.datePlaceholder : style.dateValue}
                     />
                     <p className="errorMessage">
-                      {showPage1Errors && birthdate === "" ? "Birthdate is required." : null}
+                      {showPage1Errors ? birthdayValidation() : null}
                     </p>
                   </div>
                 </div>
