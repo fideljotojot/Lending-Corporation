@@ -43,6 +43,7 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
 
   const [pageNumber, setPageNumber] = useState<RegisterPageNumber>(1);
   const [showPage1Errors, setShowPage1Errors] = useState(false);
+  const [showPage2Errors, setShowPage2Errors] = useState(false);
 
   const suffixOptions = ["Jr.", "Sr.", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 
@@ -148,6 +149,7 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
     if (gender.trim() === "") {
       return "Gender is required."
     }
+    return "";
   }
 
   const birthdayValidation = () => {
@@ -295,7 +297,7 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
       firstNameValidation() === "" &&
       middleNameValidation() === "" &&
       lastNameValidation() === "" &&
-      gender !== "" &&
+      genderValidation() === "" &&
       birthdayValidation() === "" &&
       usernameValidation() === "" &&
       emailValidation() === "" &&
@@ -303,6 +305,82 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
       confirmPasswordValidation() === ""
     );
   };
+
+  const requiredTextValidation = (value: string, fieldName: string) => {
+    if (value.trim() === "") {
+      return `${fieldName} is required.`
+    }
+    return "";
+  }
+
+  const purokValidation = () => requiredTextValidation(purok, "Purok/Street");
+  const barangayValidation = () => requiredTextValidation(barangay, "Barangay");
+  const municipalityValidation = () => requiredTextValidation(municipality, "City/Municipality");
+  const provinceValidation = () => requiredTextValidation(province, "Province");
+
+  const validIdValidation = () => {
+    if (id.trim() === "") {
+      return "Valid ID is required.";
+    }
+    return "";
+  }
+
+  const incomeValidation = () => {
+    if (income.trim() === "") {
+      return "Proof of income is required.";
+    }
+    return "";
+  }
+
+  const billingValidation = () => {
+    if (billing.trim() === "") {
+      return "Proof of billing is required.";
+    }
+    return "";
+  }
+
+  const securityQuestion1Validation = () => {
+    if (question1.trim() === "") {
+      return "Question 1 is required.";
+    }
+    return "";
+  }
+
+  const securityQuestion2Validation = () => {
+    if (question2.trim() === "") {
+      return "Question 2 is required.";
+    }
+    return "";
+  }
+
+  const securityQuestion3Validation = () => {
+    if (question3.trim() === "") {
+      return "Question 3 is required.";
+    }
+    return "";
+  }
+
+  const answer1Validation = () => requiredTextValidation(answer1, "Answer 1");
+  const answer2Validation = () => requiredTextValidation(answer2, "Answer 2");
+  const answer3Validation = () => requiredTextValidation(answer3, "Answer 3");
+
+  const isPage2Valid = () => {
+    return (
+      purokValidation() === "" &&
+      barangayValidation() === "" &&
+      municipalityValidation() === "" &&
+      provinceValidation() === "" &&
+      validIdValidation() === "" &&
+      incomeValidation() === "" &&
+      billingValidation() === "" &&
+      securityQuestion1Validation() === "" &&
+      answer1Validation() === "" &&
+      securityQuestion2Validation() === "" &&
+      answer2Validation() === "" &&
+      securityQuestion3Validation() === "" &&
+      answer3Validation() === ""
+    );
+  }
 
   /* for next button  to redirect to page 2 */
   const handleNextPage = () => {
@@ -317,6 +395,12 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    setShowPage2Errors(true);
+
+    if (!isPage2Valid()) {
+      return;
+    }
 
     if (password !== confirmPassword) {
       setSubmitMessage("Passwords do not match.");
@@ -600,18 +684,30 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                   <div className="input-group">
                     <label htmlFor="Purok">Purok/Street</label>
                     <input type="text" id="Purok" value={purok} onChange={(event) => setPurok(event.target.value)} />
+                    <p className="errorMessage">
+                      {showPage2Errors ? purokValidation() : null}
+                    </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="Barangay">Barangay</label>
                     <input type="text" id="Barangay" value={barangay} onChange={(event) => setBarangay(event.target.value)} />
+                    <p className="errorMessage">
+                      {showPage2Errors ? barangayValidation() : null}
+                    </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="Municipality">City/Municipality</label>
                     <input type="text" id="Municipality" value={municipality} onChange={(event) => setMunicipality(event.target.value)} />
+                    <p className="errorMessage">
+                      {showPage2Errors ? municipalityValidation() : null}
+                    </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="Province">Province</label>
                     <input type="text" id="Province" value={province} onChange={(event) => setProvince(event.target.value)} />
+                    <p className="errorMessage">
+                      {showPage2Errors ? provinceValidation() : null}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -625,14 +721,23 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                   <div className="input-group">
                     <label htmlFor="id">Valid ID</label>
                     <input type="file" id="id" onChange={(event) => setId(event.target.value)}/>
+                    <p className="errorMessage">
+                      {showPage2Errors ? validIdValidation() : null}
+                    </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="income">Proof of Income</label>
                     <input type="file" id="income" onChange={(event) => setIncome(event.target.value)}/>
+                    <p className="errorMessage">
+                      {showPage2Errors ? incomeValidation() : null}
+                    </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="billing">Proof of Billing</label>
                     <input type="file" id="billing" onChange={(event) => setBilling(event.target.value)}/>
+                    <p className="errorMessage">
+                      {showPage2Errors ? billingValidation() : null}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -655,10 +760,16 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                       <option value="" disabled>Select a security question</option>
                       {buildQuestionOptions([question2, question3])}
                     </select>
+                    <p className="errorMessage">
+                      {showPage2Errors ? securityQuestion1Validation() : null}
+                    </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="Answer1">Answer 1</label>
                     <input type="text" id="Answer1" value={answer1} onChange={(event) => setAnswer1(event.target.value)} />
+                    <p className="errorMessage">
+                      {showPage2Errors ? answer1Validation() : null}
+                    </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="Question2">Question 2</label>
@@ -672,10 +783,16 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                       <option value="" disabled>Select a security question</option>
                       {buildQuestionOptions([question1, question3])}
                     </select>
+                    <p className="errorMessage">
+                      {showPage2Errors ? securityQuestion2Validation() : null}
+                    </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="Answer2">Answer 2</label>
                     <input type="text" id="Answer2" value={answer2} onChange={(event) => setAnswer2(event.target.value)} />
+                    <p className="errorMessage">
+                      {showPage2Errors ? answer2Validation() : null}
+                    </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="Question3">Question 3</label>
@@ -689,10 +806,16 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                       <option value="" disabled>Select a security question</option>
                       {buildQuestionOptions([question1, question2])}
                     </select>
+                    <p className="errorMessage">
+                      {showPage2Errors ? securityQuestion3Validation() : null}
+                    </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="Answer3">Answer 3</label>
                     <input type="text" id="Answer3" value={answer3} onChange={(event) => setAnswer3(event.target.value)} />
+                    <p className="errorMessage">
+                      {showPage2Errors ? answer3Validation() : null}
+                    </p>
                   </div>
                 </div>
               </div>
