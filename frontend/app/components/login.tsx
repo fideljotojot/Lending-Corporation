@@ -17,14 +17,45 @@ export default function LoginPage({ onForgotPassword, onRegister, onLoginSuccess
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showErrors, setShowErrors] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [usernameServerError, setUsernameServerError] = useState("");
+  const [passwordServerError, setPasswordServerError] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [messageType, setMessageType] = useState<"success" | "error" | null>(null);
+
+  const usernameValidation = () => {
+    const value = username.trim();
+    if (value == "") {
+      return "Username is required.";
+    }
+    return "";
+  };
+
+  const passwordValidation = () => {
+    const value = password.trim();
+    if (value === "") {
+      return "Password is required.";
+    }
+    return "";
+  };
+
+  const isLoginValid = () => {
+    return usernameValidation() === "" && passwordValidation() === "";
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    setShowErrors(true);
+
+    if (!isLoginValid()) {
+      return;
+    }
+
     setIsSubmitting(true);
+    setUsernameServerError("");
+    setPasswordServerError("");
     setMessage(null);
     setMessageType(null);
 
@@ -43,8 +74,17 @@ export default function LoginPage({ onForgotPassword, onRegister, onLoginSuccess
       const result = await response.json();
 
       if (!response.ok) {
-        setMessage(result.error || "Login failed.");
-        setMessageType("error");
+        const backendError = result?.error || "Login failed.";
+        const errorField = result?.field;
+
+        if (errorField === "username") {
+          setUsernameServerError(backendError);
+        } else if (errorField === "password") {
+          setPasswordServerError(backendError);
+        } else {
+          setPasswordServerError(backendError);
+        }
+
         return;
       }
 
@@ -83,8 +123,14 @@ export default function LoginPage({ onForgotPassword, onRegister, onLoginSuccess
                 type="text" 
                 id="username" 
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  setUsernameServerError("");
+                }}
               />
+              <p className="errorMessage">
+                {showErrors ? usernameValidation() || usernameServerError : null}
+              </p>
             </div>
 
             <div className="input-group">
@@ -94,7 +140,10 @@ export default function LoginPage({ onForgotPassword, onRegister, onLoginSuccess
                   type={showPassword ? "text" : "password"}
                   id="password" 
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setPasswordServerError("");
+                  }}
                   className="passwordInput"
                 />
                 <button
@@ -111,6 +160,9 @@ export default function LoginPage({ onForgotPassword, onRegister, onLoginSuccess
                   </svg>
                 </button>
               </div>
+              <p className="errorMessage">
+                {showErrors ? passwordValidation() || passwordServerError : null}
+              </p>
             </div>
             <div className={styles.details}>
               <a 

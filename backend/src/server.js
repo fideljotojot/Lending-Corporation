@@ -127,7 +127,10 @@ app.post("/api/login", async (req, res) => {
   }
 
   if (!data || data.length === 0) {
-    return res.status(401).json({ error: "Invalid username or password." });
+    return res.status(401).json({
+      error: "Invalid username.",
+      field: "username",
+    });
   }
 
   const user = data[0];
@@ -135,7 +138,10 @@ app.post("/api/login", async (req, res) => {
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
-    return res.status(401).json({ error: "Invalid username or password." });
+    return res.status(401).json({
+      error: "Password do not match.",
+      field: "password",
+    });
   }
 
   res.json({
