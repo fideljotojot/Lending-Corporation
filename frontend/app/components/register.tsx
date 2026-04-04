@@ -19,6 +19,8 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   /* Address Details */
   const [purok, setPurok] = useState("");
   const [barangay, setBarangay] = useState("");
@@ -169,6 +171,124 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
     return "";
   }
 
+  const usernameValidation = () => {
+    const value = username.trim()
+    if (value == "") {
+      return "Username is required."
+    }
+    if (value.length < 8) {
+      return "Username is too short/"
+    }
+    if (value.length > 20) {
+      return "Username is too long"
+    }
+    return "";
+  }
+
+  const emailValidation = () => {
+    const value = email.trim()
+    if (value === "") {
+      return "Email is required."
+    }
+
+    if (value.length > 254) {
+      return "Email is too long."
+    }
+
+    if (/\s/.test(value)) {
+      return "Email must not contain spaces."
+    }
+
+    const parts = value.split("@");
+    if (parts.length !== 2) {
+      return "Email must contain exactly one @ symbol."
+    }
+
+    const [localPart, domainPart] = parts;
+
+    if (!localPart || !domainPart) {
+      return "Email must include both local and domain parts."
+    }
+
+    if (localPart.length > 64) {
+      return "Email local part is too long."
+    }
+
+    if (localPart.startsWith(".") || localPart.endsWith(".")) {
+      return "Email local part cannot start or end with a dot."
+    }
+
+    if (value.includes("..")) {
+      return "Email cannot contain consecutive dots."
+    }
+
+    if (!/^[A-Za-z0-9._%+-]+$/.test(localPart)) {
+      return "Email local part contains invalid characters."
+    }
+
+    if (domainPart.startsWith(".") || domainPart.endsWith(".")) {
+      return "Email domain cannot start or end with a dot."
+    }
+
+    if (!domainPart.includes(".")) {
+      return "Email domain must include a valid top-level domain."
+    }
+
+    const domainLabels = domainPart.split(".");
+    for (let i = 0; i < domainLabels.length; i++) {
+      const label = domainLabels[i];
+
+      if (label === "") {
+        return "Email domain contains an empty label."
+      }
+
+      if (label.length > 63) {
+        return "Email domain label is too long."
+      }
+
+      if (label.startsWith("-") || label.endsWith("-")) {
+        return "Email domain labels cannot start or end with a hyphen."
+      }
+
+      if (!/^[A-Za-z0-9-]+$/.test(label)) {
+        return "Email domain contains invalid characters."
+      }
+    }
+
+    const tld = domainLabels[domainLabels.length - 1];
+    if (!/^[A-Za-z]{2,}$/.test(tld)) {
+      return "Email top-level domain is invalid."
+    }
+
+    return ""
+  }
+
+  const passwordValidation = () => {
+    const value = password.trim()
+    if (value === "") {
+      return "Password is required."
+    }
+    if (/^.{1,7}$/.test(value)) {
+      return "Password is too weak."
+    }
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s])\S{8,}$/.test(value)) {
+      return "Password is not strong enough."
+    }
+    return ""
+  }
+
+  /* Confirm password validation */
+  const confirmPasswordValidation = () => {
+    const value = confirmPassword.trim()
+    if (value === "") {
+      return "Confirm Password is required."
+    }
+    if (value != password.trim()) {
+      return "Password not matched. Try again."
+    }
+    return "";
+  }
+
   /* For page 1 validation */
   const isPage1Valid = () => {
     return (
@@ -176,11 +296,11 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
       middleNameValidation() === "" &&
       lastNameValidation() === "" &&
       gender !== "" &&
-      birthdayValidation() == "" &&
-      username.trim() !== "" &&
-      email.trim() !== "" &&
-      password.trim() !== "" &&
-      confirmPassword.trim() !== ""
+      birthdayValidation() === "" &&
+      usernameValidation() === "" &&
+      emailValidation() === "" &&
+      passwordValidation() === "" &&
+      confirmPasswordValidation() === ""
     );
   };
 
@@ -393,28 +513,70 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                     <label htmlFor="username">Username</label>
                     <input type="text" id="username" value={username} onChange={(event) => setUsername(event.target.value)} />
                     <p className="errorMessage">
-                      {showPage1Errors && username.trim() === "" ? "Username is required." : null}
+                      {showPage1Errors ? usernameValidation(): null}
                     </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="email">Email</label>
                     <input type="email" id="email" value={email} onChange={(event) => setEmail(event.target.value)} />
                     <p className="errorMessage">
-                      {showPage1Errors && email.trim() === "" ? "Email is required." : null}
+                      {showPage1Errors ? emailValidation() : null}
                     </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="password">Password</label>
-                    <input type="password" id="password" value={password} onChange={(event) => setPassword(event.target.value)} />
+                    <div className="passwordField">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                        className="passwordInput" 
+                      />
+                      <button
+                        type="button"
+                        className="passwordToggle"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                        title={showPassword ? "Hide password" : "Show password"}
+                      >
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z" />
+                          <circle cx="12" cy="12" r="3" />
+                          {showPassword ? <line x1="4" y1="20" x2="20" y2="4" /> : null}
+                        </svg>
+                      </button>
+                    </div>
                     <p className="errorMessage">
-                      {showPage1Errors && password.trim() === "" ? "Password is required." : null}
+                      {showPage1Errors ? passwordValidation() : null}
                     </p>
                   </div>
                   <div className="input-group">
                     <label htmlFor="confirmPassword">Confirm Password</label>
-                    <input type="password" id="confirmPassword" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} />
+                    <div className="passwordField">
+                      <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        id="confirmPassword"
+                        value={confirmPassword}
+                        onChange={(event) => setConfirmPassword(event.target.value)}
+                        className="passwordInput"
+                      />
+                      <button
+                        type="button"
+                        className="passwordToggle"
+                        onClick={() => setShowConfirmPassword((prev) => !prev)}
+                        aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
+                        title={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
+                      >
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z" />
+                          <circle cx="12" cy="12" r="3" />
+                          {showConfirmPassword ? <line x1="4" y1="20" x2="20" y2="4" /> : null}
+                        </svg>
+                      </button>
+                    </div>
                     <p className="errorMessage">
-                      {showPage1Errors && confirmPassword.trim() === "" ? "Please confirm your password." : null}
+                      {showPage1Errors ? confirmPasswordValidation() : null}
                     </p>
                   </div>
                 </div>
