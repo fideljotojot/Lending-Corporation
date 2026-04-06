@@ -38,7 +38,7 @@
 
 .buttonBase {
 	border-radius: 1em;
-	padding: 1em 1.5em;
+	padding: .5em 1em;
 	cursor: pointer;
 	font-weight: 700;
 	transition: opacity 0.2s ease;
@@ -136,8 +136,9 @@
 .formGrid {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 1rem;
-	margin-top: 1.5rem;
+	row-gap: 1em;
+	column-gap: 2em;
+	margin-top: 1.5em;
 }
 
 .fieldGroup {

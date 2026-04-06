@@ -309,14 +309,16 @@ export default function ProfilePage({ user, onProfileUpdated }: ProfilePageProps
                             </div>
                             <div className={styles.fieldGroup}>
                                 <label className={styles.label}>Gender</label>
-                                <input
-                                    type="text"
+                                <select
                                     name="gender"
                                     value={form.gender}
                                     onChange={(event) => handleChange("gender", event.target.value)}
-                                    readOnly={!isEditing}
+                                    disabled={!isEditing}
                                     className={inputClassName(isEditing)}
-                                />
+                                >
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
                             </div>
                             <div className={styles.fieldGroup}>
                                 <label className={styles.label}>Birthday</label>
