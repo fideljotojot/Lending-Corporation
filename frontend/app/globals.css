@@ -53,7 +53,8 @@ header {
   transition: background-color 0.25s ease, box-shadow 0.25s ease, backdrop-filter 0.25s ease;
 }
 
-header.scrolled {
+header.scrolled,
+header.scrolledHome {
   background-color: rgb(244, 246, 249);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -93,12 +94,19 @@ nav ul li a {
   text-decoration: none;
 }
 
-header.home-links .logo h1 {
+header.home-links .logo h1,
+header.home-links nav ul li a{
   color: #ffffff;
 }
 
-header.home-links nav ul li a{
-  color: #ffffff;
+header.home-links.scrolledHome .logo h1,
+header.home-links.scrolledHome nav ul li a {
+  color: #171717 !important;
+}
+
+header.home-links.scrolledHome nav ul li a.active,
+header.home-links.scrolledHome nav ul li a[aria-current="page"] {
+  color: #C9A227 !important;
 }
 
 nav ul li a.active {

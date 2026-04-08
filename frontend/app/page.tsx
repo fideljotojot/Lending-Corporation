@@ -48,7 +48,7 @@ export default function Page() {
         getStoredSessionUser() ? "dashboard" : "home"
     );
     const [isScrolled, setIsScrolled] = useState(false);
-    const disableScrolledHeader = activePage === "home";
+    const scrolledHome = activePage === "home";
 
     useEffect(() => {
         const handleScroll = () => {
@@ -132,7 +132,7 @@ export default function Page() {
   return (
     <main>
         <header
-            className={`${activePage === "home" ? "home-links" : ""} ${isScrolled && !disableScrolledHeader ? "scrolled" : ""}`.trim()}
+            className={`${activePage === "home" ? "home-links" : ""} ${isScrolled && scrolledHome ? "scrolledHome" : ""}`.trim()}
         >
             <div className="logo">
                 <Image src="/images/logo.png" alt="Lending Corporation Logo" width={50} height={50} />
