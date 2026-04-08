@@ -519,7 +519,7 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                 </div>
                 <div className= {style.formContent}>
                   <div className="input-group">
-                    <label htmlFor="fname">First Name</label>
+                    <label htmlFor="fname">First Name<span className="requiredData"> *</span></label>
                     <input type="text" id="fname" value={firstName} onChange={(event) => setFirstName(event.target.value)} />
                     <p className="errorMessage">
                       {showPage1Errors ? firstNameValidation() : null}
@@ -533,7 +533,7 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                     </p>
                   </div>
                   <div className="input-group">
-                    <label htmlFor="lname">Last Name</label>
+                    <label htmlFor="lname">Last Name<span className="requiredData"> *</span></label>
                     <input type="text" id="lname" value={lastName} onChange={(event) => setLastName(event.target.value)} />
                     <p className="errorMessage">
                       {showPage1Errors ? lastNameValidation() : null}
@@ -556,7 +556,7 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                     </select>
                   </div>
                   <div className="input-group">
-                    <label htmlFor="gender">Gender</label>
+                    <label htmlFor="gender">Gender<span className="requiredData"> *</span></label>
                     <select
                       name="Gender"
                       id="gender"
@@ -573,7 +573,7 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                     </p>
                   </div>
                   <div className="input-group">
-                    <label htmlFor="birthdate">Birthdate</label>
+                    <label htmlFor="birthdate">Birthdate<span className="requiredData"> *</span></label>
                     <input
                       type="date"
                       id="birthdate"
@@ -594,21 +594,21 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                 </div>
                 <div className={style.formContent}>
                   <div className="input-group">
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="username">Username<span className="requiredData"> *</span></label>
                     <input type="text" id="username" value={username} onChange={(event) => setUsername(event.target.value)} />
                     <p className="errorMessage">
                       {showPage1Errors ? usernameValidation(): null}
                     </p>
                   </div>
                   <div className="input-group">
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email">Email<span className="requiredData"> *</span></label>
                     <input type="email" id="email" value={email} onChange={(event) => setEmail(event.target.value)} />
                     <p className="errorMessage">
                       {showPage1Errors ? emailValidation() : null}
                     </p>
                   </div>
                   <div className="input-group">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Password<span className="requiredData"> *</span></label>
                     <div className="passwordField">
                       <input
                         type={showPassword ? "text" : "password"}
@@ -636,7 +636,7 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                     </p>
                   </div>
                   <div className="input-group">
-                    <label htmlFor="confirmPassword">Confirm Password</label>
+                    <label htmlFor="confirmPassword">Confirm Password<span className="requiredData"> *</span></label>
                     <div className="passwordField">
                       <input
                         type={showConfirmPassword ? "text" : "password"}
@@ -682,28 +682,28 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                 </div>
                 <div className={style.formContent}>
                   <div className="input-group">
-                    <label htmlFor="Purok">Purok/Street</label>
+                    <label htmlFor="Purok">Purok/Street<span className="requiredData"> *</span></label>
                     <input type="text" id="Purok" value={purok} onChange={(event) => setPurok(event.target.value)} />
                     <p className="errorMessage">
                       {showPage2Errors ? purokValidation() : null}
                     </p>
                   </div>
                   <div className="input-group">
-                    <label htmlFor="Barangay">Barangay</label>
+                    <label htmlFor="Barangay">Barangay<span className="requiredData"> *</span></label>
                     <input type="text" id="Barangay" value={barangay} onChange={(event) => setBarangay(event.target.value)} />
                     <p className="errorMessage">
                       {showPage2Errors ? barangayValidation() : null}
                     </p>
                   </div>
                   <div className="input-group">
-                    <label htmlFor="Municipality">City/Municipality</label>
+                    <label htmlFor="Municipality">City/Municipality<span className="requiredData"> *</span></label>
                     <input type="text" id="Municipality" value={municipality} onChange={(event) => setMunicipality(event.target.value)} />
                     <p className="errorMessage">
                       {showPage2Errors ? municipalityValidation() : null}
                     </p>
                   </div>
                   <div className="input-group">
-                    <label htmlFor="Province">Province</label>
+                    <label htmlFor="Province">Province<span className="requiredData"> *</span></label>
                     <input type="text" id="Province" value={province} onChange={(event) => setProvince(event.target.value)} />
                     <p className="errorMessage">
                       {showPage2Errors ? provinceValidation() : null}
@@ -719,21 +719,21 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                 </div>
                 <div className={style.formContent}>
                   <div className="input-group">
-                    <label htmlFor="id">Valid ID</label>
+                    <label htmlFor="id">Valid ID<span className="requiredData"> *</span></label>
                     <input type="file" id="id" onChange={(event) => setId(event.target.value)}/>
                     <p className="errorMessage">
                       {showPage2Errors ? validIdValidation() : null}
                     </p>
                   </div>
                   <div className="input-group">
-                    <label htmlFor="income">Proof of Income</label>
+                    <label htmlFor="income">Proof of Income<span className="requiredData"> *</span></label>
                     <input type="file" id="income" onChange={(event) => setIncome(event.target.value)}/>
                     <p className="errorMessage">
                       {showPage2Errors ? incomeValidation() : null}
                     </p>
                   </div>
                   <div className="input-group">
-                    <label htmlFor="billing">Proof of Billing</label>
+                    <label htmlFor="billing">Proof of Billing<span className="requiredData"> *</span></label>
                     <input type="file" id="billing" onChange={(event) => setBilling(event.target.value)}/>
                     <p className="errorMessage">
                       {showPage2Errors ? billingValidation() : null}
@@ -749,7 +749,7 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                 </div>
                 <div className={style.formContent}>
                   <div className="input-group">
-                    <label htmlFor="Question1">Question 1</label>
+                    <label htmlFor="Question1">Question 1<span className="requiredData"> *</span></label>
                     <select
                       name="Question1"
                       id="Question1"
@@ -765,14 +765,14 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                     </p>
                   </div>
                   <div className="input-group">
-                    <label htmlFor="Answer1">Answer 1</label>
+                    <label htmlFor="Answer1">Answer 1<span className="requiredData"> *</span></label>
                     <input type="text" id="Answer1" value={answer1} onChange={(event) => setAnswer1(event.target.value)} />
                     <p className="errorMessage">
                       {showPage2Errors ? answer1Validation() : null}
                     </p>
                   </div>
                   <div className="input-group">
-                    <label htmlFor="Question2">Question 2</label>
+                    <label htmlFor="Question2">Question 2<span className="requiredData"> *</span></label>
                     <select
                       name="Question2"
                       id="Question2"
@@ -780,7 +780,7 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                       onChange={(event) => setQuestion2(event.target.value)}
                       className={question2 === "" ? style.selectPlaceholder : ""}
                     >
-                      <option value="" disabled>Select a security question</option>
+                      <option value="" disabled>Select a security question *</option>
                       {buildQuestionOptions([question1, question3])}
                     </select>
                     <p className="errorMessage">
@@ -788,14 +788,14 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                     </p>
                   </div>
                   <div className="input-group">
-                    <label htmlFor="Answer2">Answer 2</label>
+                    <label htmlFor="Answer2">Answer 2<span className="requiredData"> *</span></label>
                     <input type="text" id="Answer2" value={answer2} onChange={(event) => setAnswer2(event.target.value)} />
                     <p className="errorMessage">
                       {showPage2Errors ? answer2Validation() : null}
                     </p>
                   </div>
                   <div className="input-group">
-                    <label htmlFor="Question3">Question 3</label>
+                    <label htmlFor="Question3">Question 3<span className="requiredData"> *</span></label>
                     <select
                       name="Question3"
                       id="Question3"
@@ -803,7 +803,7 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                       onChange={(event) => setQuestion3(event.target.value)}
                       className={question3 === "" ? style.selectPlaceholder : ""}
                     >
-                      <option value="" disabled>Select a security question</option>
+                      <option value="" disabled>Select a security question *</option>
                       {buildQuestionOptions([question1, question2])}
                     </select>
                     <p className="errorMessage">
@@ -811,7 +811,7 @@ export default function RegisterPage({ onRegisterSuccess }: RegisterPageProps) {
                     </p>
                   </div>
                   <div className="input-group">
-                    <label htmlFor="Answer3">Answer 3</label>
+                    <label htmlFor="Answer3">Answer 3 <span className="requiredData"> *</span></label>
                     <input type="text" id="Answer3" value={answer3} onChange={(event) => setAnswer3(event.target.value)} />
                     <p className="errorMessage">
                       {showPage2Errors ? answer3Validation() : null}

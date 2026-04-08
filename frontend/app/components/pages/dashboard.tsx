@@ -148,11 +148,48 @@ export default function DashboardPage({ user, onApplyLoan, onPayLoan, onViewPaym
   };
 
   return (
-    <main className="wrapper" style={{ gap: "1.5em" , paddingBottom: "0"}}>
+    <main className="wrapper" style={{ gap: "2.5em"}}>
       <div className={style["top-container"]}>
         <h1 className={style["welcome"]}>
           Welcome, <span>{user.username}</span>
         </h1>
+
+        <div className={style["quick-actions"]}>
+          <h2>Quick Actions</h2>
+          <div className={style["button-container"]}>
+            <button type="button" onClick={onApplyLoan}>
+              <Image
+                src="/images/checklist.png"
+                alt="Apply Loan"
+                width={24}
+                height={24}
+                className={style["button-icon"]}
+              />
+              Apply Loan
+            </button>
+            <button type="button" onClick={onPayLoan}>
+              <Image
+                src="/images/payment-method.png"
+                alt="Pay Loan"
+                width={24}
+                height={24}
+                className={style["button-icon"]}
+              />
+              Pay Loan
+            </button>
+            <button type="button" onClick={onViewPayments}>
+              <Image
+                src="/images/calendar-salary.png"
+                alt="View Loan History"
+                width={24}
+                height={24}
+                className={style["button-icon"]}
+              />
+              View Loan History
+            </button>
+          </div>
+        </div>
+      </div>
 
         <div className={style["data-container"]}>
           {/* Loan Overview */}
@@ -201,58 +238,23 @@ export default function DashboardPage({ user, onApplyLoan, onPayLoan, onViewPaym
             </div>
           </div>
         </div>
-      </div>
-
-      <div className={style["quick-actions"]}>
-        <h2>Quick Actions</h2>
-        <div className={style["button-container"]}>
-          <button type="button" onClick={onApplyLoan}>
-            <Image
-              src="/images/checklist.png"
-              alt="Apply Loan"
-              width={24}
-              height={24}
-              className={style["button-icon"]}
-            />
-            Apply Loan
-          </button>
-          <button type="button" onClick={onPayLoan}>
-            <Image
-              src="/images/payment-method.png"
-              alt="Pay Loan"
-              width={24}
-              height={24}
-              className={style["button-icon"]}
-            />
-            Pay Loan
-          </button>
-          <button type="button" onClick={onViewPayments}>
-            <Image
-              src="/images/calendar-salary.png"
-              alt="View Loan History"
-              width={24}
-              height={24}
-              className={style["button-icon"]}
-            />
-            View Loan History
-          </button>
-        </div>
-      </div>
 
       <div className={style["bottom-container"]}>
         <div className={style["bottom-card"]}>
-          <h2>Recent Activity</h2>
           <div className={`${style["data-card"]} ${style["activity-card"]}`}>
-            <select
-              name="activitySortType"
-              id="activitySortType"
-              className={style["sorting"]}
-              value={activitySortType}
-              onChange={handleActivitySortChange}
-            >
-              <option value="recent">Most Recent</option>
-                <option value="oldest">Oldest</option>
-            </select>
+            <div className={style["sorting-container"]}> 
+              <h2>Recent Activity</h2>
+              <select
+                name="activitySortType"
+                id="activitySortType"
+                className={style["sorting"]}
+                value={activitySortType}
+                onChange={handleActivitySortChange}
+              >
+                <option value="recent">Most Recent</option>
+                  <option value="oldest">Oldest</option>
+              </select>
+            </div>
             <div className={style["activity-list"]}>
               <ul>
                 {sortedActivities.map((activity) => (
@@ -266,9 +268,9 @@ export default function DashboardPage({ user, onApplyLoan, onPayLoan, onViewPaym
           </div>
         </div>
         <div className={style["bottom-card"]}>
-          <h2>Notifications</h2>
           <div className={style["data-card"]}>
             <div className={style["sorting-container"]}>
+              <h2>Notifications</h2>
               <select
                 name="notificationSortType"
                 id="notificationSortType"

@@ -139,7 +139,7 @@
 }
 
 .bottom-card .data-card {
-    height: 16em;
+    height: 30em;
     border-radius: 1em;
     margin-top: .8em;
 }
@@ -156,6 +156,10 @@
     gap: 1em;
 }
 
+.sorting-container h2 {
+    width: 100%;
+}
+
 .sorting {
     font-size: .8em;
     align-self: flex-end;
@@ -168,7 +172,7 @@
 
 .activity-list {
     overflow: auto;
-    height: 10em;
+    height: 100%;
     padding: 1em;
     border-radius: 1em;
     background-color: #ffffffaf;

@@ -35,6 +35,7 @@ type ProfilePageProps = {
 export default function ProfilePage({ user, onProfileUpdated }: ProfilePageProps) {
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [form, setForm] = useState<UserProfile | null>(null);
+    const [profileFileName, setProfileFileName] = useState("");
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -238,9 +239,18 @@ export default function ProfilePage({ user, onProfileUpdated }: ProfilePageProps
                         <div className={styles.profileContainer}>
                             <Image src="/images/8588131.jpg" alt="Profile picture" width={300} height={300} className={styles.profileImage} />
                         </div>
-                        <button className={styles.uploadButton}>
-                            Upload Profile Picture
-                        </button>
+                        <div className={styles.uploadButton}>
+                            <input
+                                className={styles.fileInput}
+                                type="file"
+                                id="profile"
+                                accept="image/*"
+                                readOnly = {isEditing}
+                                disabled
+                                onChange={(event) => setProfileFileName(event.target.files?.[0]?.name ?? "")}
+                            />
+                            <label className={styles.uploadButton} htmlFor="profile">Upload Profile Picture</label>
+                        </div>
 
                         <div className={styles.stackFields}>
                             <div className={styles.fieldGroup}>
@@ -270,8 +280,8 @@ export default function ProfilePage({ user, onProfileUpdated }: ProfilePageProps
                                     name="first_name"
                                     value={form.first_name}
                                     onChange={(event) => handleChange("first_name", event.target.value)}
-                                    readOnly={!isEditing}
-                                    className={inputClassName(isEditing)}
+                                    readOnly 
+                                    className={inputClassName(false)}
                                 />
                             </div>
                             <div className={styles.fieldGroup}>
@@ -281,8 +291,8 @@ export default function ProfilePage({ user, onProfileUpdated }: ProfilePageProps
                                     name="middle_name"
                                     value={form.middle_name}
                                     onChange={(event) => handleChange("middle_name", event.target.value)}
-                                    readOnly={!isEditing}
-                                    className={inputClassName(isEditing)}
+                                    readOnly 
+                                    className={inputClassName(false)}
                                 />
                             </div>
                             <div className={styles.fieldGroup}>
@@ -292,8 +302,8 @@ export default function ProfilePage({ user, onProfileUpdated }: ProfilePageProps
                                     name="last_name"
                                     value={form.last_name}
                                     onChange={(event) => handleChange("last_name", event.target.value)}
-                                    readOnly={!isEditing}
-                                    className={inputClassName(isEditing)}
+                                    readOnly 
+                                    className={inputClassName(false)}
                                 />
                             </div>
                             <div className={styles.fieldGroup}>
@@ -303,8 +313,8 @@ export default function ProfilePage({ user, onProfileUpdated }: ProfilePageProps
                                     name="suffix"
                                     value={form.suffix}
                                     onChange={(event) => handleChange("suffix", event.target.value)}
-                                    readOnly={!isEditing}
-                                    className={inputClassName(isEditing)}
+                                    readOnly 
+                                    className={inputClassName(false)}
                                 />
                             </div>
                             <div className={styles.fieldGroup}>
@@ -313,8 +323,7 @@ export default function ProfilePage({ user, onProfileUpdated }: ProfilePageProps
                                     name="gender"
                                     value={form.gender}
                                     onChange={(event) => handleChange("gender", event.target.value)}
-                                    disabled={!isEditing}
-                                    className={inputClassName(isEditing)}
+                                    className={inputClassName(false)}
                                 >
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
@@ -327,8 +336,8 @@ export default function ProfilePage({ user, onProfileUpdated }: ProfilePageProps
                                     name="birthdate"
                                     value={form.birthdate}
                                     onChange={(event) => handleChange("birthdate", event.target.value)}
-                                    readOnly={!isEditing}
-                                    className={inputClassName(isEditing)}
+                                    readOnly 
+                                    className={inputClassName(false)}
                                 />
                             </div>
                         </div>

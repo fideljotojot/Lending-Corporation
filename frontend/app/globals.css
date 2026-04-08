@@ -122,6 +122,11 @@ header.home-links nav ul li a[aria-current="page"] {
   font-family: var(--font-roboto), sans-serif;
 }
 
+.input-group label .requiredData {
+  color: rgb(247, 2, 2);
+  font-weight: 700;
+}
+
 .input-group input, 
 .input-group select {
   padding: 0.5em;
@@ -142,19 +147,24 @@ header.home-links nav ul li a[aria-current="page"] {
   color: #374151;
   font: inherit;
   font-size: .8em;
+  padding: 0;
 }
 
 .input-group input[type="file"]::file-selector-button {
-  padding-right: 0.7em !important;
+  padding:  0.5em 1em !important;
   border-right: 1px solid #9ca3af;
-  color: #111827;
+  background: #404040;
+  color: #fdfeff;
   font: inherit;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  border-right: 1px solid #9ca3af;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .input-group input[type="file"]::file-selector-button:hover {
-  background: #e5e7eb;
+  background: #101a57;
 }
 
 .input-group input:focus,
