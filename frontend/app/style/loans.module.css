@@ -1,0 +1,12 @@
+.top-div {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    height: 15em;
+}
+
+.loan-container {
+    display: flex;
+    gap: 3em;
+    height: 100%
+}

@@ -198,6 +198,13 @@ button:hover {
   background-color: #192e8d;
 }
 
+.headline {
+  margin: 0;
+  font: 600 1.5em var(--font-lato);
+  text-transform: uppercase;
+  color: #0F2D52;
+}
+
 .data-card {
     position: relative;
     overflow: hidden;
