@@ -80,7 +80,9 @@ export default function Page() {
                 case "loans":
                     return <LoansPage />;
                 case "payments":
-                    return <PaymentsPage />;
+                    return <PaymentsPage
+                        onPayLoan={() => setActivePage("pay-loan")}
+                    />
                 case "notifications":
                     return <NotificationsPage />;
                 case "profile":
@@ -132,7 +134,7 @@ export default function Page() {
   return (
     <main>
         <header
-            className={`${activePage === "home" ? "home-links" : ""} ${isScrolled && scrolledHome ? "scrolledHome" : ""}`.trim()}
+            className={`${activePage === "home" ? "home-links" : ""} ${isScrolled ? "scrolledHome" : ""}`.trim()}
         >
             <div className="logo">
                 <Image src="/images/logo.png" alt="Lending Corporation Logo" width={50} height={50} />
