@@ -118,7 +118,7 @@ export default function LoginPage({ onForgotPassword, onRegister, onLoginSuccess
           </div>
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className="input-group">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="username">Username <span className="requiredData">*</span></label>
               <input 
                 type="text" 
                 id="username" 
@@ -134,7 +134,7 @@ export default function LoginPage({ onForgotPassword, onRegister, onLoginSuccess
             </div>
 
             <div className="input-group">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">Password <span className="requiredData">*</span></label>
               <div className="passwordField">
                 <input 
                   type={showPassword ? "text" : "password"}

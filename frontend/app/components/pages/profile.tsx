@@ -323,6 +323,7 @@ export default function ProfilePage({ user, onProfileUpdated }: ProfilePageProps
                                     name="gender"
                                     value={form.gender}
                                     onChange={(event) => handleChange("gender", event.target.value)}
+                                    disabled={!isEditing}
                                     className={inputClassName(false)}
                                 >
                                     <option value="Male">Male</option>

@@ -48,7 +48,6 @@ export default function Page() {
         getStoredSessionUser() ? "dashboard" : "home"
     );
     const [isScrolled, setIsScrolled] = useState(false);
-    const scrolledHome = activePage === "home";
 
     useEffect(() => {
         const handleScroll = () => {
