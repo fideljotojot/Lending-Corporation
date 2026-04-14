@@ -42,9 +42,13 @@ export default function PaymentsPage({onPayLoan} : PaymentsPageProps) {
     return (
         <main className="wrapper">
             <div className={style["title-div"]}>
-                <h1 className="headline">Current Loan</h1>
-                <button style={{paddingLeft: 15, paddingRight: 15}} onClick={onPayLoan}>Pay Loan</button>
+                <h1 className="welcome">Payment History</h1>
+                <button onClick={onPayLoan}>Pay Loan</button>
             </div>
+                <div className={style["title-row"]}>
+                    <h1 className="headline">Current Loan</h1>
+                    <p className={style["loan-type"]}>(Car Loan)</p>
+                </div>
             <table className={`${style["table"]} ${["data-card"]}`}>
                 <thead>
                     <tr>

@@ -27,9 +27,19 @@ main {
 .wrapper {
   display: flex;
   flex-direction: column;
-  padding: 6em 4em 3em;
+  padding: 5.5em 4em 3em;
   width: 100%;
   min-height: 100vh;
+}
+
+.welcome {
+    font: 700 2.5em var(--font-inter);
+    color: #111827;
+}
+
+.welcome span {
+    color: #484545;
+    text-transform: uppercase;
 }
 
 header {

@@ -69,6 +69,31 @@ const notifications: ActivityItem[] = [
     date: "Jan-01-2026",
     description: "Payment of P1000 due for Loan #1234 on Jan-09-1999",
   },
+  {
+    id: "notification-5",
+    date: "Jan-01-2026",
+    description: "Payment of P1000 due for Loan #1234 on Jan-09-1999",
+  },
+  {
+    id: "notification-6",
+    date: "Jan-03-1999",
+    description: "Payment of P1000 due for Loan #1234 on Jan-09-1999",
+  },
+  {
+    id: "notification-7",
+    date: "Jan-02-1999",
+    description: "Payment of P1000 due for Loan #1234 on Jan-09-1999",
+  },
+  {
+    id: "notification-8",
+    date: "Jan-01-2026",
+    description: "Payment of P1000 due for Loan #1234 on Jan-09-1999",
+  },
+  {
+    id: "notification-9",
+    date: "Jan-01-2026",
+    description: "Payment of P1000 due for Loan #1234 on Jan-09-1999",
+  },
   /* till here */
 ];
 
@@ -148,9 +173,9 @@ export default function DashboardPage({ user, onApplyLoan, onPayLoan, onViewPaym
   };
 
   return (
-    <main className="wrapper" style={{ gap: "2.5em"}}>
+    <main className="wrapper" style={{ gap: "1em"}}>
       <div className={style["top-container"]}>
-        <h1 className={style["welcome"]}>
+        <h1 className="welcome">
           Welcome, <span>{user.username}</span>
         </h1>
 

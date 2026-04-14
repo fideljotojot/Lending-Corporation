@@ -6,16 +6,6 @@
     margin: 0;
 }
 
-.welcome {
-    font: 700 2.5em var(--font-inter);
-    color: #111827;
-}
-
-.welcome span {
-    color: #484545;
-    text-transform: uppercase;
-}
-
 .data-container {
     display: flex;
     gap: 5em;
@@ -139,7 +129,7 @@
 }
 
 .bottom-card .data-card {
-    height: 30em;
+    height: 25em;
     border-radius: 1em;
     margin-top: .8em;
 }
