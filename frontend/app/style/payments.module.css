@@ -1,19 +1,63 @@
-.title-div {
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2em 4em;
+    margin-top: 1em;
+    height: 26em;
+}
+
+.payment-card {
     display: flex;
+    flex-direction: column;
+    gap: .5em;
+}
+
+.payment-card button {
+    width: fit-content;
+    font-weight: 100;
+    padding: .4em .8em;
+    color: #fff;
+    background-color: #1F4E8C;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5em;
+}
+
+.payment-card button i {
+    font-size: .8em;
+    display: flex;
+    align-items: center;
+}
+
+.payment-card button p {
+    color: #fff;
+    font-size: .75em;
+}
+
+.row {
+    display: flex;
+    align-items: center;
     justify-content: space-between;
-    width: 100%;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
 }
 
-.title-div button {
-    padding: 0 1em;
-}
 
-.title-row {
+.action-div {
     display: flex;
     gap: 1em;
-    align-items: center;
-    padding: 1em 0;
+}
+
+.action-div select,
+.action-div button {
+    font-weight: 100;
+    padding: .5em 1em;
+    color: #fff;
+    background-color: #1F4E8C;
+    border: 1px solid #ccc;
+    border-radius: .5em;
+    font-size: .9em;
 }
 
 .loan-type {
